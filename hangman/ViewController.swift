@@ -171,7 +171,7 @@ class ViewController: UIViewController {
         var auxWord = String()
         allWords.shuffle()
         allWords.forEach { (valor) in
-            if valor.count <= 9{
+            if valor.count <= 8{
                 auxWord = valor
             }
         }
