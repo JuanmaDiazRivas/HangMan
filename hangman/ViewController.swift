@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     private let alertControllerKeyMessage : String = "attributedMessage"
     private let characterSpacing : Double = 12
     
+    @IBOutlet var contentScroll: UIScrollView!
     @IBOutlet var word: UILabel!
     @IBOutlet var life: UIProgressView!
     @IBOutlet var letter: UITextField!
@@ -45,6 +46,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         assignLetterProperties()
         
@@ -166,7 +171,7 @@ class ViewController: UIViewController {
         var auxWord = String()
         allWords.shuffle()
         allWords.forEach { (valor) in
-            if valor.count <= 9{
+            if valor.count <= 8{
                 auxWord = valor
             }
         }
@@ -265,6 +270,21 @@ class ViewController: UIViewController {
     
     @objc func textFieldChange(textField: UITextField){
      dismissKeyboard()
+    }
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            contentScroll.contentInset = .zero
+        } else {
+            contentScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+        }
+        
+        contentScroll.scrollIndicatorInsets = contentScroll.contentInset
     }
 }
 

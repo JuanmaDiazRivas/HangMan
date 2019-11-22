@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:hangman.xcodeproj">
+      location = "group:/Users/plexus/Documents/Hangman/hangman/images/background.jpg">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
