@@ -23,10 +23,10 @@
                                 <viewLayoutGuide key="safeArea" id="pL9-U1-wQM"/>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oJe-gt-11W">
-                                <rect key="frame" x="0.0" y="64" width="414" height="832"/>
+                                <rect key="frame" x="0.0" y="54" width="414" height="808"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tL1-nf-mhY">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="673"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="693"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IAz-Tq-uPM">
                                                 <rect key="frame" x="0.0" y="33" width="414" height="79"/>
@@ -137,13 +137,13 @@
                                         <constraints>
                                             <constraint firstItem="bil-75-rlp" firstAttribute="centerX" secondItem="tL1-nf-mhY" secondAttribute="centerX" id="2xS-Wj-56a"/>
                                             <constraint firstItem="IAz-Tq-uPM" firstAttribute="leading" secondItem="tL1-nf-mhY" secondAttribute="leading" id="Ch3-No-5BB"/>
-                                            <constraint firstAttribute="bottom" secondItem="aUB-Yf-Gok" secondAttribute="bottom" id="FDB-1c-lh2"/>
                                             <constraint firstAttribute="trailing" secondItem="IAz-Tq-uPM" secondAttribute="trailing" id="FVl-9r-QW0"/>
                                             <constraint firstItem="4QV-zs-cqd" firstAttribute="leading" secondItem="tL1-nf-mhY" secondAttribute="leading" constant="75" id="XgX-Vo-s6X"/>
                                             <constraint firstAttribute="trailing" secondItem="4QV-zs-cqd" secondAttribute="trailing" constant="75" id="XjL-ms-Pc3"/>
                                             <constraint firstItem="aUB-Yf-Gok" firstAttribute="top" secondItem="4QV-zs-cqd" secondAttribute="bottom" constant="20" id="gi6-vs-6M3"/>
                                             <constraint firstItem="IAz-Tq-uPM" firstAttribute="top" secondItem="tL1-nf-mhY" secondAttribute="top" constant="33" id="gqr-PD-BKa"/>
                                             <constraint firstItem="aUB-Yf-Gok" firstAttribute="centerX" secondItem="tL1-nf-mhY" secondAttribute="centerX" id="r8D-Uh-YtL"/>
+                                            <constraint firstAttribute="bottom" secondItem="aUB-Yf-Gok" secondAttribute="bottom" constant="20" id="vEC-eo-om9"/>
                                             <constraint firstItem="4QV-zs-cqd" firstAttribute="top" secondItem="IAz-Tq-uPM" secondAttribute="bottom" id="yWk-zM-ian"/>
                                         </constraints>
                                     </view>
@@ -160,14 +160,14 @@
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="A44-KV-3Z9" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="1FR-uJ-uk3"/>
-                            <constraint firstAttribute="trailing" secondItem="oJe-gt-11W" secondAttribute="trailing" id="9YU-2S-y49"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oJe-gt-11W" secondAttribute="trailing" id="9YU-2S-y49"/>
                             <constraint firstItem="A44-KV-3Z9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Az9-xX-FpV"/>
                             <constraint firstAttribute="bottom" secondItem="A44-KV-3Z9" secondAttribute="bottom" id="BUG-3T-MMy"/>
-                            <constraint firstAttribute="bottom" secondItem="oJe-gt-11W" secondAttribute="bottom" id="FY3-78-n0m"/>
-                            <constraint firstItem="oJe-gt-11W" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="MOd-5e-YAs"/>
-                            <constraint firstItem="oJe-gt-11W" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="OAh-jQ-lKK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oJe-gt-11W" secondAttribute="bottom" id="FY3-78-n0m"/>
+                            <constraint firstItem="oJe-gt-11W" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="MOd-5e-YAs"/>
+                            <constraint firstItem="oJe-gt-11W" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="OAh-jQ-lKK"/>
                             <constraint firstItem="A44-KV-3Z9" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="SQB-Oe-VDJ"/>
-                            <constraint firstItem="oJe-gt-11W" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="o0v-j3-ih5"/>
+                            <constraint firstItem="oJe-gt-11W" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="o0v-j3-ih5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <userDefinedRuntimeAttributes>
@@ -176,6 +176,7 @@
                     </view>
                     <connections>
                         <outlet property="button" destination="fLa-Nv-atp" id="3x4-jL-inW"/>
+                        <outlet property="contentScroll" destination="oJe-gt-11W" id="dYF-t5-dfU"/>
                         <outlet property="imageHangMan" destination="afy-6G-Vas" id="Xfj-Aw-6tT"/>
                         <outlet property="letter" destination="DA9-TN-ojw" id="xCg-Js-kL5"/>
                         <outlet property="life" destination="M6M-B3-TlQ" id="vdU-VZ-lT4"/>
