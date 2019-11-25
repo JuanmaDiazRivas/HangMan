@@ -22,10 +22,14 @@ class ViewController: UIViewController {
     
     //Music
     private var backgroundMusicAvAudioPlayer : AVAudioPlayer?
+    private var backgroundMusicVolume : Float = 0.5
     private var playEffect : AVAudioPlayer?
     private let nameOfMainTheme = "background.mp3"
     private let nameOfDeadEffect = "deadEffect.mp3"
     private let nameOfWriteEffect = "writeEffect.mp3"
+    private let nameOfMuteIcon = "mute.png"
+    private let nameOfSoundIcon = "sound.png"
+    private var isMuted = false
     
     
     //IBOutlets
@@ -35,6 +39,7 @@ class ViewController: UIViewController {
     @IBOutlet var letter: UITextField!
     @IBOutlet var button: UIButton!
     @IBOutlet var imageHangMan: UIImageView!
+    @IBOutlet weak var volumeButton: UIButton!
     
     var allWords = [String]()
     var originalWord = [Character]()
@@ -108,6 +113,33 @@ class ViewController: UIViewController {
     
     @IBAction func refreshGame(_ sender: Any) {
         startGame()
+    }
+    
+    fileprivate func assignImageToVolumeButton(_ nameOfImageToAssign :String) {
+        if let image = UIImage(named: nameOfImageToAssign){
+            volumeButton.setImage(image, for: .normal)
+        }
+    }
+    
+    @IBAction func changeAudioMode(_ sender: Any) {
+        if !isMuted{
+            muteApp(true)
+            assignImageToVolumeButton(nameOfMuteIcon)
+        }else{
+            muteApp(false)
+            assignImageToVolumeButton(nameOfSoundIcon)
+        }
+        
+        isMuted = !isMuted
+    }
+    
+    private func muteApp(_ mute:Bool){
+        if mute {
+            backgroundMusicAvAudioPlayer?.volume = 0.0
+        }else{
+            backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume 
+        }
+        
     }
     
     private func decreaseHp(){
@@ -299,12 +331,15 @@ class ViewController: UIViewController {
     }
     
     private func playEffectWithString(_ efectname :String){
-        do{
-            playEffect = try AVAudioPlayer(contentsOf: createUrlWithName(parameter: efectname))
-            playEffect?.play()
-        } catch {
-            //could not load file :(
+        if(!isMuted){
+            do{
+                playEffect = try AVAudioPlayer(contentsOf: createUrlWithName(parameter: efectname))
+                playEffect?.play()
+            } catch {
+                //could not load file :(
+            }
         }
+        
     }
     private func createUrlWithName(parameter:String) -> URL{
         let path = Bundle.main.path(forResource: parameter, ofType:nil)!

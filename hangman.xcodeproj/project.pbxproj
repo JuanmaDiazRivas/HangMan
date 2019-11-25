@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		284861B3238C320600F256C1 /* mute.png in Resources */ = {isa = PBXBuildFile; fileRef = 284861B1238C320500F256C1 /* mute.png */; };
+		284861B4238C320600F256C1 /* sound.png in Resources */ = {isa = PBXBuildFile; fileRef = 284861B2238C320500F256C1 /* sound.png */; };
 		286AA80E238B068800C501B2 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 286AA80D238B068800C501B2 /* background.mp3 */; };
 		286AA810238B06FE00C501B2 /* deadEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 286AA80F238B06FE00C501B2 /* deadEffect.mp3 */; };
 		286AA814238B1F0000C501B2 /* writeEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 286AA813238B1F0000C501B2 /* writeEffect.mp3 */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		284861B1238C320500F256C1 /* mute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mute.png; sourceTree = "<group>"; };
+		284861B2238C320500F256C1 /* sound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound.png; sourceTree = "<group>"; };
 		286AA80D238B068800C501B2 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		286AA80F238B06FE00C501B2 /* deadEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = deadEffect.mp3; sourceTree = "<group>"; };
 		286AA813238B1F0000C501B2 /* writeEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = writeEffect.mp3; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 				90FB5C1822FC18A9007024F5 /* refresh.png */,
 				9004CA4D22FD4B780046DE68 /* 7.png */,
 				9004CA4E22FD4B780046DE68 /* 6.png */,
+				284861B1238C320500F256C1 /* mute.png */,
+				284861B2238C320500F256C1 /* sound.png */,
 				9004CA4A22FD4B780046DE68 /* 5.png */,
 				9004CA4922FD4B770046DE68 /* 4.png */,
 				9004CA4C22FD4B780046DE68 /* 3.png */,
@@ -184,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9004CA5222FD4B780046DE68 /* 1.png in Resources */,
+				284861B4238C320600F256C1 /* sound.png in Resources */,
 				9004CA5022FD4B780046DE68 /* 4.png in Resources */,
 				900316B523868B8A00A908D2 /* LaunchScreen.storyboard in Resources */,
 				9004CA5522FD4B780046DE68 /* 6.png in Resources */,
@@ -193,6 +200,7 @@
 				286AA814238B1F0000C501B2 /* writeEffect.mp3 in Resources */,
 				90004B1222FAE71A0049CDDA /* wordList.txt in Resources */,
 				900316B323868B4F00A908D2 /* Main.storyboard in Resources */,
+				284861B3238C320600F256C1 /* mute.png in Resources */,
 				9004CA5422FD4B780046DE68 /* 7.png in Resources */,
 				90004B1022FAB3660049CDDA /* lever.png in Resources */,
 				9004CA5122FD4B780046DE68 /* 5.png in Resources */,
