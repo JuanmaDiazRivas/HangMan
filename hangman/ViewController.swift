@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
@@ -19,6 +20,15 @@ class ViewController: UIViewController {
     private let alertControllerKeyMessage : String = "attributedMessage"
     private let characterSpacing : Double = 12
     
+    //Music
+    private var backgroundMusicAvAudioPlayer : AVAudioPlayer?
+    private var playEffect : AVAudioPlayer?
+    private let nameOfMainTheme = "background.mp3"
+    private let nameOfDeadEffect = "deadEffect.mp3"
+    private let nameOfWriteEffect = "writeEffect.mp3"
+    
+    
+    //IBOutlets
     @IBOutlet var contentScroll: UIScrollView!
     @IBOutlet var word: UILabel!
     @IBOutlet var life: UIProgressView!
@@ -61,6 +71,10 @@ class ViewController: UIViewController {
         
         view.addGestureRecognizer(tap)
         
+        prepareMusic()
+        
+        playMainSong()
+
     }
     
     @IBAction func playLetter(_ sender: Any) {
@@ -72,6 +86,9 @@ class ViewController: UIViewController {
             letter.text?.removeAll()
         
         if !modified {
+            //play letter effect before decrease hp
+            playEffectWithString(nameOfWriteEffect)
+            
             decreaseHp()
         }
 
@@ -211,6 +228,8 @@ class ViewController: UIViewController {
     }
     
     private func showFailedSolution() {
+        //play dead effect before die
+        playEffectWithString(nameOfDeadEffect)
         
         let message = "\nTu salud se ha agotado.\n\n Solución.. "
         
@@ -263,6 +282,35 @@ class ViewController: UIViewController {
         
         letter.addTarget(self, action: #selector(textFieldChange(textField:)), for: UIControl.Event.editingChanged)
     }
+    
+    private func prepareMusic(){
+        do {
+            backgroundMusicAvAudioPlayer = try AVAudioPlayer(contentsOf: createUrlWithName(parameter: nameOfMainTheme))
+            backgroundMusicAvAudioPlayer?.volume = 0.5
+        } catch {
+            // couldn't load file :(
+        }
+    }
+    
+    private func playMainSong(){
+        //music will loop forever
+        backgroundMusicAvAudioPlayer?.numberOfLoops = -1
+        backgroundMusicAvAudioPlayer?.play()
+    }
+    
+    private func playEffectWithString(_ efectname :String){
+        do{
+            playEffect = try AVAudioPlayer(contentsOf: createUrlWithName(parameter: efectname))
+            playEffect?.play()
+        } catch {
+            //could not load file :(
+        }
+    }
+    private func createUrlWithName(parameter:String) -> URL{
+        let path = Bundle.main.path(forResource: parameter, ofType:nil)!
+        return URL(fileURLWithPath: path)
+    }
+    
     
     @objc func dismissKeyboard() {
         view.endEditing(true)

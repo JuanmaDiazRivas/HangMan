@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		286AA80E238B068800C501B2 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 286AA80D238B068800C501B2 /* background.mp3 */; };
+		286AA810238B06FE00C501B2 /* deadEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 286AA80F238B06FE00C501B2 /* deadEffect.mp3 */; };
+		286AA814238B1F0000C501B2 /* writeEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 286AA813238B1F0000C501B2 /* writeEffect.mp3 */; };
 		90004B1022FAB3660049CDDA /* lever.png in Resources */ = {isa = PBXBuildFile; fileRef = 90004B0F22FAB3660049CDDA /* lever.png */; };
 		90004B1222FAE71A0049CDDA /* wordList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90004B1122FAE71A0049CDDA /* wordList.txt */; };
 		900089B722F99A8500CB914A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900089B622F99A8500CB914A /* AppDelegate.swift */; };
@@ -27,6 +30,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		286AA80D238B068800C501B2 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
+		286AA80F238B06FE00C501B2 /* deadEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = deadEffect.mp3; sourceTree = "<group>"; };
+		286AA813238B1F0000C501B2 /* writeEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = writeEffect.mp3; sourceTree = "<group>"; };
 		90004B0F22FAB3660049CDDA /* lever.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lever.png; sourceTree = "<group>"; };
 		90004B1122FAE71A0049CDDA /* wordList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wordList.txt; sourceTree = "<group>"; };
 		900089B322F99A8500CB914A /* hangman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hangman.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +65,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		286AA80A238B021200C501B2 /* music */ = {
+			isa = PBXGroup;
+			children = (
+				286AA80D238B068800C501B2 /* background.mp3 */,
+				286AA80F238B06FE00C501B2 /* deadEffect.mp3 */,
+				286AA813238B1F0000C501B2 /* writeEffect.mp3 */,
+			);
+			path = music;
+			sourceTree = "<group>";
+		};
 		900089AA22F99A8500CB914A = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +94,7 @@
 		900089B522F99A8500CB914A /* hangman */ = {
 			isa = PBXGroup;
 			children = (
+				286AA80A238B021200C501B2 /* music */,
 				90FB5C0D22FC0AC7007024F5 /* images */,
 				900089B622F99A8500CB914A /* AppDelegate.swift */,
 				90FB5C2822FC457C007024F5 /* ViewController.swift */,
@@ -173,11 +190,14 @@
 				90FB5C1722FC15FE007024F5 /* backgroundold.png in Resources */,
 				900316AA23855D7600A908D2 /* Assets.xcassets in Resources */,
 				900316B823868CCE00A908D2 /* background.jpg in Resources */,
+				286AA814238B1F0000C501B2 /* writeEffect.mp3 in Resources */,
 				90004B1222FAE71A0049CDDA /* wordList.txt in Resources */,
 				900316B323868B4F00A908D2 /* Main.storyboard in Resources */,
 				9004CA5422FD4B780046DE68 /* 7.png in Resources */,
 				90004B1022FAB3660049CDDA /* lever.png in Resources */,
 				9004CA5122FD4B780046DE68 /* 5.png in Resources */,
+				286AA80E238B068800C501B2 /* background.mp3 in Resources */,
+				286AA810238B06FE00C501B2 /* deadEffect.mp3 in Resources */,
 				90FB5C1922FC18A9007024F5 /* refresh.png in Resources */,
 				9004CA5322FD4B780046DE68 /* 3.png in Resources */,
 				9004CA4F22FD4B780046DE68 /* 2.png in Resources */,
