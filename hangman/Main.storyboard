@@ -53,19 +53,30 @@
                                                         <color key="progressTintColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="trackTintColor" red="0.30840110780000002" green="0.5618229508" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </progressView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z0c-iz-Dct">
+                                                        <rect key="frame" x="8" y="8" width="27" height="27"/>
+                                                        <state key="normal" image="sound.png"/>
+                                                        <connections>
+                                                            <action selector="changeAudioMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xm4-IC-HX8"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="kat-AK-FCz" firstAttribute="leading" secondItem="M6M-B3-TlQ" secondAttribute="trailing" constant="94" id="9gM-ak-OPZ"/>
                                                     <constraint firstItem="M6M-B3-TlQ" firstAttribute="top" secondItem="bil-75-rlp" secondAttribute="bottom" constant="30" id="DzZ-ZD-7QV"/>
+                                                    <constraint firstItem="bil-75-rlp" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Z0c-iz-Dct" secondAttribute="trailing" constant="144" id="GNE-sP-IWP"/>
                                                     <constraint firstAttribute="trailing" secondItem="kat-AK-FCz" secondAttribute="trailing" constant="8" id="H3s-U8-pTU"/>
                                                     <constraint firstAttribute="bottom" secondItem="kat-AK-FCz" secondAttribute="bottom" constant="41" id="HbK-0F-WhP"/>
+                                                    <constraint firstItem="Z0c-iz-Dct" firstAttribute="leading" secondItem="IAz-Tq-uPM" secondAttribute="leading" constant="8" id="MvC-Lx-eXz"/>
                                                     <constraint firstItem="kat-AK-FCz" firstAttribute="leading" relation="lessThanOrEqual" secondItem="bil-75-rlp" secondAttribute="trailing" constant="141" id="Nfz-xV-l0b"/>
+                                                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="M6M-B3-TlQ" secondAttribute="trailing" constant="132" id="O85-Lb-GlN"/>
                                                     <constraint firstItem="bil-75-rlp" firstAttribute="leading" relation="lessThanOrEqual" secondItem="IAz-Tq-uPM" secondAttribute="leading" constant="179" id="Vre-ih-zda"/>
                                                     <constraint firstAttribute="bottom" secondItem="M6M-B3-TlQ" secondAttribute="bottom" constant="13" id="Wc8-Y3-Sk2"/>
                                                     <constraint firstItem="kat-AK-FCz" firstAttribute="top" secondItem="IAz-Tq-uPM" secondAttribute="top" constant="8" id="bq0-zp-B7e"/>
+                                                    <constraint firstItem="M6M-B3-TlQ" firstAttribute="centerX" secondItem="bil-75-rlp" secondAttribute="centerX" id="feF-jS-5AT"/>
                                                     <constraint firstItem="bil-75-rlp" firstAttribute="top" secondItem="IAz-Tq-uPM" secondAttribute="top" constant="10" id="qbc-XH-ll7"/>
-                                                    <constraint firstItem="M6M-B3-TlQ" firstAttribute="leading" secondItem="IAz-Tq-uPM" secondAttribute="leading" constant="132" id="v5H-dl-ds1"/>
+                                                    <constraint firstItem="Z0c-iz-Dct" firstAttribute="top" secondItem="IAz-Tq-uPM" secondAttribute="top" constant="8" id="sgi-16-IFl"/>
+                                                    <constraint firstItem="M6M-B3-TlQ" firstAttribute="leading" relation="lessThanOrEqual" secondItem="IAz-Tq-uPM" secondAttribute="leading" constant="132" id="v5H-dl-ds1"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4QV-zs-cqd">
@@ -180,6 +191,7 @@
                         <outlet property="imageHangMan" destination="afy-6G-Vas" id="Xfj-Aw-6tT"/>
                         <outlet property="letter" destination="DA9-TN-ojw" id="xCg-Js-kL5"/>
                         <outlet property="life" destination="M6M-B3-TlQ" id="vdU-VZ-lT4"/>
+                        <outlet property="volumeButton" destination="Z0c-iz-Dct" id="win-Xi-HM5"/>
                         <outlet property="word" destination="JKz-Xj-pYg" id="ewP-ZQ-lCW"/>
                     </connections>
                 </viewController>
@@ -192,5 +204,6 @@
         <image name="background.jpg" width="1637" height="1173"/>
         <image name="lever.png" width="384" height="384"/>
         <image name="refresh.png" width="27" height="27"/>
+        <image name="sound.png" width="27" height="27"/>
     </resources>
 </document>

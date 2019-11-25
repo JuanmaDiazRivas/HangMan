@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
@@ -19,12 +20,26 @@ class ViewController: UIViewController {
     private let alertControllerKeyMessage : String = "attributedMessage"
     private let characterSpacing : Double = 12
     
+    //Music
+    private var backgroundMusicAvAudioPlayer : AVAudioPlayer?
+    private var backgroundMusicVolume : Float = 0.5
+    private var playEffect : AVAudioPlayer?
+    private let nameOfMainTheme = "background.mp3"
+    private let nameOfDeadEffect = "deadEffect.mp3"
+    private let nameOfWriteEffect = "writeEffect.mp3"
+    private let nameOfMuteIcon = "mute.png"
+    private let nameOfSoundIcon = "sound.png"
+    private var isMuted = false
+    
+    
+    //IBOutlets
     @IBOutlet var contentScroll: UIScrollView!
     @IBOutlet var word: UILabel!
     @IBOutlet var life: UIProgressView!
     @IBOutlet var letter: UITextField!
     @IBOutlet var button: UIButton!
     @IBOutlet var imageHangMan: UIImageView!
+    @IBOutlet weak var volumeButton: UIButton!
     
     var allWords = [String]()
     var originalWord = [Character]()
@@ -61,6 +76,10 @@ class ViewController: UIViewController {
         
         view.addGestureRecognizer(tap)
         
+        prepareMusic()
+        
+        playMainSong()
+
     }
     
     @IBAction func playLetter(_ sender: Any) {
@@ -72,6 +91,9 @@ class ViewController: UIViewController {
             letter.text?.removeAll()
         
         if !modified {
+            //play letter effect before decrease hp
+            playEffectWithString(nameOfWriteEffect)
+            
             decreaseHp()
         }
 
@@ -91,6 +113,33 @@ class ViewController: UIViewController {
     
     @IBAction func refreshGame(_ sender: Any) {
         startGame()
+    }
+    
+    fileprivate func assignImageToVolumeButton(_ nameOfImageToAssign :String) {
+        if let image = UIImage(named: nameOfImageToAssign){
+            volumeButton.setImage(image, for: .normal)
+        }
+    }
+    
+    @IBAction func changeAudioMode(_ sender: Any) {
+        if !isMuted{
+            muteApp(true)
+            assignImageToVolumeButton(nameOfMuteIcon)
+        }else{
+            muteApp(false)
+            assignImageToVolumeButton(nameOfSoundIcon)
+        }
+        
+        isMuted = !isMuted
+    }
+    
+    private func muteApp(_ mute:Bool){
+        if mute {
+            backgroundMusicAvAudioPlayer?.volume = 0.0
+        }else{
+            backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume 
+        }
+        
     }
     
     private func decreaseHp(){
@@ -211,6 +260,8 @@ class ViewController: UIViewController {
     }
     
     private func showFailedSolution() {
+        //play dead effect before die
+        playEffectWithString(nameOfDeadEffect)
         
         let message = "\nTu salud se ha agotado.\n\n Solución.. "
         
@@ -263,6 +314,38 @@ class ViewController: UIViewController {
         
         letter.addTarget(self, action: #selector(textFieldChange(textField:)), for: UIControl.Event.editingChanged)
     }
+    
+    private func prepareMusic(){
+        do {
+            backgroundMusicAvAudioPlayer = try AVAudioPlayer(contentsOf: createUrlWithName(parameter: nameOfMainTheme))
+            backgroundMusicAvAudioPlayer?.volume = 0.5
+        } catch {
+            // couldn't load file :(
+        }
+    }
+    
+    private func playMainSong(){
+        //music will loop forever
+        backgroundMusicAvAudioPlayer?.numberOfLoops = -1
+        backgroundMusicAvAudioPlayer?.play()
+    }
+    
+    private func playEffectWithString(_ efectname :String){
+        if(!isMuted){
+            do{
+                playEffect = try AVAudioPlayer(contentsOf: createUrlWithName(parameter: efectname))
+                playEffect?.play()
+            } catch {
+                //could not load file :(
+            }
+        }
+        
+    }
+    private func createUrlWithName(parameter:String) -> URL{
+        let path = Bundle.main.path(forResource: parameter, ofType:nil)!
+        return URL(fileURLWithPath: path)
+    }
+    
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
