@@ -10,20 +10,16 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController {
-
+    
+    //Constants
     private let textFieldLentgh: Int = 1
     private let errorsOnInitAllowed: Float = 7
-    private let sucessColor : UIColor = UIColor.blue
-    private let errorColor : UIColor = UIColor.red
     private let resourceName : String = "wordList"
     private let resourceExtension : String = "txt"
     private let alertControllerKeyMessage : String = "attributedMessage"
     private let characterSpacing : Double = 12
     
     //Music
-    private var backgroundMusicAvAudioPlayer : AVAudioPlayer?
-    private var backgroundMusicVolume : Float = 0.5
-    private var playEffect : AVAudioPlayer?
     private let nameOfMainTheme = "background.mp3"
     private let nameOfDeadEffect = "deadEffect.mp3"
     private let nameOfWriteEffect = "writeEffect.mp3"
@@ -31,33 +27,38 @@ class ViewController: UIViewController {
     private let nameOfSoundIcon = "sound.png"
     private var isMuted = false
     
+    //Aux variables
+    var allWords = [String]()
+    var originalWord = [Character]()
+    var currentWord: String? {
+        get {
+            return wordLabel.text
+        }
+        set {
+            wordLabel.text = newValue
+        }
+    }
+    var triesLeft = Float()
+    enum MessageType : String{
+        case Error
+        case Sucess
+    }
     
     //IBOutlets
     @IBOutlet var contentScroll: UIScrollView!
-    @IBOutlet var word: UILabel!
+    @IBOutlet var wordLabel: UILabel!
     @IBOutlet var life: UIProgressView!
     @IBOutlet var letter: UITextField!
     @IBOutlet var button: UIButton!
     @IBOutlet var imageHangMan: UIImageView!
     @IBOutlet weak var volumeButton: UIButton!
     
-    var allWords = [String]()
-    var originalWord = [Character]()
-    var currentWord: String? {
-        get {
-            return word.text
-        }
-        set {
-            word.text = newValue
-        }
-    }
-    var triesLeft = Float()
-    
-    
-    enum MessageType : String{
-        case Error
-        case Sucess
-    }
+    //iOS class
+    private var backgroundMusicAvAudioPlayer : AVAudioPlayer?
+    private var backgroundMusicVolume : Float = 0.5
+    private var playEffect : AVAudioPlayer?
+    private let sucessColor : UIColor = UIColor.blue
+    private let errorColor : UIColor = UIColor.red
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,8 +70,6 @@ class ViewController: UIViewController {
         assignLetterProperties()
         
         loadDictionary()
-        
-        startGame()
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         
@@ -97,7 +96,7 @@ class ViewController: UIViewController {
             decreaseHp()
         }
 
-        if let wordText = word.text,
+        if let wordText = wordLabel.text,
             !wordText.contains("_"){
             showSucessSolution()
         }
@@ -175,7 +174,7 @@ class ViewController: UIViewController {
     private func modifyWord(letterUsed : Character) -> Bool?{
         
         guard
-            let currentWord = word.text,
+            let currentWord = wordLabel.text,
             !currentWord.isEmpty
             else {return true}
         
@@ -190,15 +189,15 @@ class ViewController: UIViewController {
         }
        
         if wordModified {
-             word.text = String(auxWordArray).uppercased()
-             word.addCharacterSpacing(characterSpacing)
+             wordLabel.text = String(auxWordArray).uppercased()
+             wordLabel.addCharacterSpacing(characterSpacing)
         }
         
         return wordModified
     }
     
     private func modifyWordWithoutReturn(letterUsed : Character){
-        guard let currentWord = word.text, word.text != "" else {return}
+        guard let currentWord = wordLabel.text, wordLabel.text != "" else {return}
         
         var auxWordArray = Array(currentWord)
         var wordModified = false
@@ -211,44 +210,9 @@ class ViewController: UIViewController {
         }
         
         if wordModified{
-            word.text = String(auxWordArray).uppercased()
-            word.addCharacterSpacing(characterSpacing)
+            wordLabel.text = String(auxWordArray).uppercased()
+            wordLabel.addCharacterSpacing(characterSpacing)
         }
-    }
-    
-    private func shuffleDictionaryWord() -> String {
-        var auxWord = String()
-        allWords.shuffle()
-        allWords.forEach { (valor) in
-            if valor.count <= 8{
-                auxWord = valor
-            }
-        }
-        return auxWord
-    }
-    
-    @objc private func startGame() {
-        let wordFromDictionary = shuffleDictionaryWord()
-        
-        life.progress = 100
-        life.progressTintColor = .green
-        
-        triesLeft = errorsOnInitAllowed
-        
-        imageHangMan.image = nil
-        
-        originalWord = Array(wordFromDictionary)
-        word.text = String(repeating: "_", count: originalWord.count)
-        
-        //initialize the game playing 2 existent letters
-        for _ in 0..<3{
-            let random = Int.random(in: 0..<originalWord.count)
-            let letterToPlay = Array(originalWord)[random]
-            modifyWord(letterUsed: letterToPlay)
-        }
-        
-        word.text = word.text?.uppercased()
-        word.addCharacterSpacing(characterSpacing)
     }
     
     private func loadDictionary() {
@@ -368,6 +332,20 @@ class ViewController: UIViewController {
         }
         
         contentScroll.scrollIndicatorInsets = contentScroll.contentInset
+    }
+    
+    
+    
+    //new methods
+    func resetView(){
+        life.progress = 100
+        life.progressTintColor = .green
+        imageHangMan.image = nil
+    }
+    
+    @objc private func changeTextWordLabel(text: String) {
+        wordLabel.text = text.uppercased()
+        wordLabel.addCharacterSpacing(characterSpacing)
     }
 }
 
