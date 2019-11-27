@@ -9,5 +9,5 @@
 import Foundation
 
 protocol DictionaryDelegate: NSObjectProtocol{
-    func getDictionary() -> [DictionaryModel]
+    func getDictionary(dictionary:[DictionaryModel])
 }

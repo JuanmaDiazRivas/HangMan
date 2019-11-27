@@ -9,36 +9,12 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, HangManViewDelegate {
     
     //Constants
-    private let textFieldLentgh: Int = 1
-    private let errorsOnInitAllowed: Float = 7
-    private let resourceName : String = "wordList"
-    private let resourceExtension : String = "txt"
-    private let alertControllerKeyMessage : String = "attributedMessage"
     private let characterSpacing : Double = 12
-    
-    //Music
-    private let nameOfMainTheme = "background.mp3"
-    private let nameOfDeadEffect = "deadEffect.mp3"
-    private let nameOfWriteEffect = "writeEffect.mp3"
-    private let nameOfMuteIcon = "mute.png"
-    private let nameOfSoundIcon = "sound.png"
-    private var isMuted = false
-    
-    //Aux variables
-    var allWords = [String]()
-    var originalWord = [Character]()
-    var currentWord: String? {
-        get {
-            return wordLabel.text
-        }
-        set {
-            wordLabel.text = newValue
-        }
-    }
-    var triesLeft = Float()
+    private let textFieldLentgh: Int = 1
+    private let alertControllerKeyMessage : String = "attributedMessage"
     enum MessageType : String{
         case Error
         case Sucess
@@ -60,6 +36,7 @@ class ViewController: UIViewController {
     private let sucessColor : UIColor = UIColor.blue
     private let errorColor : UIColor = UIColor.red
     
+    private let hangmanPresenter = HangManPresenter()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -215,16 +192,9 @@ class ViewController: UIViewController {
         }
     }
     
-    private func loadDictionary() {
-        if let content = Bundle.main.url(forResource: resourceName, withExtension: resourceExtension){
-            if let startWords = try? String(contentsOf: content){
-                allWords = startWords.components(separatedBy: "\n")
-            }
-        }
-    }
-    
     private func showFailedSolution() {
         //play dead effect before die
+        hangmanPresenter.playEffectWithString(nameOfDeadEffect)
         playEffectWithString(nameOfDeadEffect)
         
         let message = "\nTu salud se ha agotado.\n\n Solución.. "
@@ -251,7 +221,7 @@ class ViewController: UIViewController {
         
         ac.addAction(UIAlertAction(title: "OK", style: .default){
             (alert:UIAlertAction!) in
-            self.startGame()
+            self.hangmanPresenter.startGame()
         })
         
         present(ac,animated: true)
@@ -260,11 +230,11 @@ class ViewController: UIViewController {
     private func formatMessage(message: String,messageType : MessageType) -> NSMutableAttributedString{
         
         var messageMutableString = NSMutableAttributedString()
-        messageMutableString = NSMutableAttributedString(string: message + String(originalWord).uppercased(), attributes: [NSAttributedString.Key : Any]())
-        messageMutableString.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 15), range: NSRange(location:message.count,length: originalWord.count))
+        messageMutableString = NSMutableAttributedString(string: message + String(hangmanPresenter.getOriginalWord()).uppercased(), attributes: [NSAttributedString.Key : Any]())
+        messageMutableString.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 15), range: NSRange(location:message.count,length: hangmanPresenter.getOriginalWord().count))
 
         let color = (messageType == MessageType.Sucess) ? sucessColor : errorColor
-    messageMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location:message.count,length:originalWord.count))
+    messageMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location:message.count,length:hangmanPresenter.getOriginalWord().count))
         
         return messageMutableString
         
@@ -279,10 +249,10 @@ class ViewController: UIViewController {
         letter.addTarget(self, action: #selector(textFieldChange(textField:)), for: UIControl.Event.editingChanged)
     }
     
-    private func prepareMusic(){
+    func prepareMusic(musicURL: URL){
         do {
-            backgroundMusicAvAudioPlayer = try AVAudioPlayer(contentsOf: createUrlWithName(parameter: nameOfMainTheme))
-            backgroundMusicAvAudioPlayer?.volume = 0.5
+            backgroundMusicAvAudioPlayer = try AVAudioPlayer(contentsOf: musicURL)
+            backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume
         } catch {
             // couldn't load file :(
         }
@@ -292,22 +262,6 @@ class ViewController: UIViewController {
         //music will loop forever
         backgroundMusicAvAudioPlayer?.numberOfLoops = -1
         backgroundMusicAvAudioPlayer?.play()
-    }
-    
-    private func playEffectWithString(_ efectname :String){
-        if(!isMuted){
-            do{
-                playEffect = try AVAudioPlayer(contentsOf: createUrlWithName(parameter: efectname))
-                playEffect?.play()
-            } catch {
-                //could not load file :(
-            }
-        }
-        
-    }
-    private func createUrlWithName(parameter:String) -> URL{
-        let path = Bundle.main.path(forResource: parameter, ofType:nil)!
-        return URL(fileURLWithPath: path)
     }
     
     
@@ -343,10 +297,29 @@ class ViewController: UIViewController {
         imageHangMan.image = nil
     }
     
-    @objc private func changeTextWordLabel(text: String) {
+    @objc internal func changeTextWordLabel(text: String) {
         wordLabel.text = text.uppercased()
         wordLabel.addCharacterSpacing(characterSpacing)
     }
+    
+    func getCurrentWordLabel() -> String{
+        guard let wordLabel = wordLabel.text else {return ""}
+        return wordLabel
+    }
+    
+    func startGame(){
+        self.hangmanPresenter.startGame()
+    }
+    
+    func playEffectWithString(_ efectURL : URL){
+        do{
+            playEffect = try AVAudioPlayer(contentsOf: efectURL)
+            playEffect?.play()
+        }catch{
+            //cannot play audio :(
+        }
+    }
+    
 }
 
 extension ViewController: UITextFieldDelegate {

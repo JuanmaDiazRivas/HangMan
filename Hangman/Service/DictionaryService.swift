@@ -8,12 +8,14 @@
 
 import Foundation
 
-class DictionaryService: NSObject, DictionaryDelegate{
+class DictionaryService{
+    
+    weak private var dictionaryDelegate: DictionaryDelegate?
     
     private let resourceName : String = "wordList"
     private let resourceExtension : String = "txt"
     
-    func getDictionary() -> [DictionaryModel]{
+    func getDictionary(){
         
         var dictionaryModel = [DictionaryModel]()
         
@@ -26,6 +28,10 @@ class DictionaryService: NSObject, DictionaryDelegate{
             }
         }
         
-        return dictionaryModel
+        self.dictionaryDelegate?.getDictionary(dictionary: dictionaryModel)
+    }
+    
+    func setDelegate(dictionaryDelegate: DictionaryDelegate){
+        self.dictionaryDelegate = dictionaryDelegate
     }
 }

@@ -11,5 +11,8 @@ import Foundation
 protocol HangManViewDelegate: NSObjectProtocol{
     func startGame()
     func changeTextWordLabel(text:String)
+    func getCurrentWordLabel() -> String
     func resetView()
+    func playEffectWithString(_ efectURL : URL)
+    func prepareMusic(musicURL: URL)
 }
