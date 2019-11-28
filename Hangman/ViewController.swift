@@ -36,6 +36,13 @@ class ViewController: UIViewController, HangManViewDelegate {
     private let sucessColor : UIColor = UIColor.blue
     private let errorColor : UIColor = UIColor.red
     
+    //Music
+    private let nameOfMainTheme = "background.mp3"
+    private let nameOfDeadEffect = "deadEffect.mp3"
+    private let nameOfWriteEffect = "writeEffect.mp3"
+    private let nameOfMuteIcon = "mute.png"
+    private let nameOfSoundIcon = "sound.png"
+    
     private let hangmanPresenter = HangManPresenter()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,143 +66,26 @@ class ViewController: UIViewController, HangManViewDelegate {
     }
     
     @IBAction func playLetter(_ sender: Any) {
-        guard let letterUsed = letter.text,
-            !letterUsed.isEmpty,
-            let modified = modifyWord(letterUsed: Character(letterUsed))
-            else { return }
-        
-            letter.text?.removeAll()
-        
-        if !modified {
-            //play letter effect before decrease hp
-            playEffectWithString(nameOfWriteEffect)
-            
-            decreaseHp()
-        }
-
-        if let wordText = wordLabel.text,
-            !wordText.contains("_"){
-            showSucessSolution()
-        }
-    }
-
-    private func checkLetterOnWord(_ indexesOnRealWord: inout [Int], _ letterUsed: String ) {
-        for i in 0..<originalWord.count{
-            if String(originalWord[i]) == letterUsed.lowercased(){
-                indexesOnRealWord.append(i)
-            }
-        }
+        hangmanPresenter.playLetter(letter: letter.text, nameEffectIfDie: nameOfDeadEffect)
     }
     
     @IBAction func refreshGame(_ sender: Any) {
         startGame()
     }
     
-    fileprivate func assignImageToVolumeButton(_ nameOfImageToAssign :String) {
+    func assignImageToVolumeButton(_ nameOfImageToAssign :String) {
         if let image = UIImage(named: nameOfImageToAssign){
             volumeButton.setImage(image, for: .normal)
         }
     }
     
     @IBAction func changeAudioMode(_ sender: Any) {
-        if !isMuted{
-            muteApp(true)
-            assignImageToVolumeButton(nameOfMuteIcon)
-        }else{
-            muteApp(false)
-            assignImageToVolumeButton(nameOfSoundIcon)
-        }
-        
-        isMuted = !isMuted
+       hangmanPresenter.changeAudioMode()
     }
     
-    private func muteApp(_ mute:Bool){
-        if mute {
-            backgroundMusicAvAudioPlayer?.volume = 0.0
-        }else{
-            backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume 
-        }
-        
-    }
-    
-    private func decreaseHp(){
-        switchToNextImage()
-        
-        let decrease = Float((100/errorsOnInitAllowed)/100)
-        
-        life.progress = life.progress - decrease
-        if life.progress <= decrease{
-            life.progress = 0
-            
-            showFailedSolution()
-        }
-        
-        switch life.progress {
-            case 0.0..<0.3:
-                life.progressTintColor = .red
-                break
-            case 0.3..<0.6:
-                life.progressTintColor = .orange
-                break
-            default:
-                life.progressTintColor = .green
-        }
-    }
-    
-    private func switchToNextImage(){
-        imageHangMan.image = UIImage(imageLiteralResourceName: "\(Int(triesLeft)).png")
-        triesLeft -= 1
-    }
-    
-    @discardableResult
-    private func modifyWord(letterUsed : Character) -> Bool?{
-        
-        guard
-            let currentWord = wordLabel.text,
-            !currentWord.isEmpty
-            else {return true}
-        
-        var auxWordArray = Array(currentWord)
-        var wordModified = false
-        
-        originalWord.enumerated().forEach { index, character in
-            if character.uppercased() == letterUsed.uppercased() {
-                wordModified = true
-                auxWordArray[index] = character
-            }
-        }
-       
-        if wordModified {
-             wordLabel.text = String(auxWordArray).uppercased()
-             wordLabel.addCharacterSpacing(characterSpacing)
-        }
-        
-        return wordModified
-    }
-    
-    private func modifyWordWithoutReturn(letterUsed : Character){
-        guard let currentWord = wordLabel.text, wordLabel.text != "" else {return}
-        
-        var auxWordArray = Array(currentWord)
-        var wordModified = false
-        
-        for i in 0..<originalWord.count{
-            if originalWord[i].uppercased() == letterUsed.uppercased(){
-                auxWordArray[i] = letterUsed
-                wordModified = true
-            }
-        }
-        
-        if wordModified{
-            wordLabel.text = String(auxWordArray).uppercased()
-            wordLabel.addCharacterSpacing(characterSpacing)
-        }
-    }
-    
-    private func showFailedSolution() {
+    func showFailedSolution() {
         //play dead effect before die
         hangmanPresenter.playEffectWithString(nameOfDeadEffect)
-        playEffectWithString(nameOfDeadEffect)
         
         let message = "\nTu salud se ha agotado.\n\n Solución.. "
         
@@ -258,37 +148,10 @@ class ViewController: UIViewController, HangManViewDelegate {
         }
     }
     
-    private func playMainSong(){
-        //music will loop forever
-        backgroundMusicAvAudioPlayer?.numberOfLoops = -1
-        backgroundMusicAvAudioPlayer?.play()
-    }
-    
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-    
-    @objc func textFieldChange(textField: UITextField){
-     dismissKeyboard()
-    }
-    
-    @objc func adjustForKeyboard(notification: Notification) {
-        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-        
-        let keyboardScreenEndFrame = keyboardValue.cgRectValue
-        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-        
-        if notification.name == UIResponder.keyboardWillHideNotification {
-            contentScroll.contentInset = .zero
-        } else {
-            contentScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
-        }
-        
-        contentScroll.scrollIndicatorInsets = contentScroll.contentInset
-    }
-    
-    
     
     //new methods
     func resetView(){
@@ -311,6 +174,15 @@ class ViewController: UIViewController, HangManViewDelegate {
         self.hangmanPresenter.startGame()
     }
     
+    func changeHangmanImg(literalName: String) {
+        imageHangMan.image = UIImage(imageLiteralResourceName: literalName)
+    }
+    
+    func cleanInputLetter(){
+        letter.text?.removeAll()
+    }
+    
+    //sounds functions
     func playEffectWithString(_ efectURL : URL){
         do{
             playEffect = try AVAudioPlayer(contentsOf: efectURL)
@@ -318,6 +190,56 @@ class ViewController: UIViewController, HangManViewDelegate {
         }catch{
             //cannot play audio :(
         }
+    }
+    
+    func showMuteIconAndMuteApp(){
+        assignImageToVolumeButton(nameOfMuteIcon)
+        backgroundMusicAvAudioPlayer?.volume = 0.0
+    }
+    
+    func showSoundIconAndUnmuteApp(){
+        assignImageToVolumeButton(nameOfSoundIcon)
+        backgroundMusicAvAudioPlayer?.volume = backgroundMusicAvAudioPlayer
+    }
+    
+    private func playMainSong(){
+        //music will loop forever
+        backgroundMusicAvAudioPlayer?.numberOfLoops = -1
+        backgroundMusicAvAudioPlayer?.play()
+    }
+    
+    
+    //life functions
+    func changeLifeProgress(_ lifeProgress: Float){
+        life.progress = lifeProgress
+    }
+    
+    func getLifeProgress() -> Float {
+        return life.progress
+    }
+    
+    func changeLifeColor(red: Float,green: Float,blue: Float,alpha:Float){
+        life.progressTintColor = UIColor(red: CGFloat(red),green: CGFloat(green),blue: CGFloat(blue),alpha: CGFloat(alpha))
+    }
+    
+    //special keyboard events
+    @objc func textFieldChange(textField: UITextField){
+        dismissKeyboard()
+    }
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            contentScroll.contentInset = .zero
+        } else {
+            contentScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+        }
+        
+        contentScroll.scrollIndicatorInsets = contentScroll.contentInset
     }
     
 }

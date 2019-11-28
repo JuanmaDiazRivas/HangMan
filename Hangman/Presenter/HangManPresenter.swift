@@ -21,11 +21,6 @@ class HangManPresenter: NSObject, DictionaryDelegate {
     
     
     //Music
-    private let nameOfMainTheme = "background.mp3"
-    private let nameOfDeadEffect = "deadEffect.mp3"
-    private let nameOfWriteEffect = "writeEffect.mp3"
-    private let nameOfMuteIcon = "mute.png"
-    private let nameOfSoundIcon = "sound.png"
     private var isMuted = false
     
     //Aux variables
@@ -79,6 +74,11 @@ class HangManPresenter: NSObject, DictionaryDelegate {
         return auxWord
     }
     
+    private func switchToNextImage(){
+        self.hangmanViewDelegate?.changeHangmanImg(literalName: "\(Int(triesLeft)).png")
+        triesLeft -= 1
+    }
+    
     @discardableResult
     private func modifyWord(letterUsed : Character) -> Bool?{
         
@@ -109,17 +109,95 @@ class HangManPresenter: NSObject, DictionaryDelegate {
         return URL(fileURLWithPath: path)
     }
     
+    
+    //life functions
+    fileprivate func endGame() {
+            self.hangmanViewDelegate?.changeLifeProgress(0)
+            self.hangmanViewDelegate?.showFailedSolution()
+    }
+    
+    fileprivate func changeLifeBarStatus(_ progressCalculated: Float) {
+        switch progressCalculated {
+            case 0.0..<0.3:
+                self.hangmanViewDelegate?.changeLifeColor(red:1.00, green:0.00, blue:0.00, alpha:1.0)
+                break
+            case 0.3..<0.6:
+                self.hangmanViewDelegate?.changeLifeColor(red:1.00, green:0.64, blue:0.13, alpha:1.0)
+                break
+            default:
+                self.hangmanViewDelegate?.changeLifeColor(red:0.14, green:0.91, blue:0.07, alpha:1.0)
+        }
+    }
+    
+    private func changeGameStatus(){
+        
+        guard let barProgress = self.hangmanViewDelegate?.getLifeProgress() else {return}
+        
+        switchToNextImage()
+        
+        let decrease = Float((100/errorsOnInitAllowed)/100)
+        
+        let progressCalculated = barProgress - decrease
+        
+        self.hangmanViewDelegate?.changeLifeProgress(progressCalculated)
+        
+        if progressCalculated <= decrease{
+            endGame()
+        }
+        
+        changeLifeBarStatus(progressCalculated)
+    }
+    
+    //game functions
+    func playLetter(letter: String?, nameEffectIfDie: String) {
+        guard let letterUsed = letter,
+            !letterUsed.isEmpty,
+            let modified = modifyWord(letterUsed: Character(letterUsed))
+            else { return }
+        
+        self.hangmanViewDelegate?.cleanInputLetter()
+        
+        if !modified {
+            //play letter effect before decrease hp
+            self.hangmanViewDelegate?.playEffectWithString(createUrlWithName(parameter: nameEffectIfDie))
+            
+            changeGameStatus()
+        }
+    }
+    
+    private func checkLetterOnWord(_ indexesOnRealWord: inout [Int], _ letterUsed: String ) {
+        for i in 0..<originalWord.count{
+            if String(originalWord[i]) == letterUsed.lowercased(){
+                indexesOnRealWord.append(i)
+            }
+        }
+    }
+    
+    //music functions
+    func changeAudioMode() {
+        if !isMuted{
+            self.hangmanViewDelegate?.showMuteIconAndMuteApp()
+        }else{
+            self.hangmanViewDelegate?.showSoundIconAndUnmuteApp()
+        }
+        
+        isMuted = !isMuted
+    }
+
+    
     //delegate methods
     func getDictionary(dictionary: [DictionaryModel]) {
         self.dictionaryModel = dictionary
     }
     
-    func playEffectWithString(_ efectURL : URL){
+    func playEffectWithString(_ effectName : String){
         if(!isMuted){
-            self.hangmanViewDelegate?.playEffectWithString(efectURL)
+            self.hangmanViewDelegate?.playEffectWithString(createUrlWithName(parameter: effectName))
         }
     }
+    
     func prepareMusic(musicURL: URL){
         self.hangmanViewDelegate?.prepareMusic(musicURL: musicURL)
     }
+    
 }
