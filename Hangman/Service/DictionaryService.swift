@@ -15,7 +15,7 @@ class DictionaryService{
     private let resourceName : String = "wordList"
     private let resourceExtension : String = "txt"
     
-    func getDictionary(){
+    func getDictionary() -> [DictionaryModel]{
         
         var dictionaryModel = [DictionaryModel]()
         
@@ -28,7 +28,7 @@ class DictionaryService{
             }
         }
         
-        self.dictionaryDelegate?.getDictionary(dictionary: dictionaryModel)
+        return dictionaryModel
     }
     
     func setDelegate(dictionaryDelegate: DictionaryDelegate){

@@ -36,41 +36,58 @@ class ViewController: UIViewController, HangManViewDelegate {
     private let sucessColor : UIColor = UIColor.blue
     private let errorColor : UIColor = UIColor.red
     
-    //Music
+    //Music constants
     private let nameOfMainTheme = "background.mp3"
     private let nameOfDeadEffect = "deadEffect.mp3"
     private let nameOfWriteEffect = "writeEffect.mp3"
     private let nameOfMuteIcon = "mute.png"
     private let nameOfSoundIcon = "sound.png"
     
+    //Presenter
     private let hangmanPresenter = HangManPresenter()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        hangmanPresenter.setViewDelegate(hangmanViewDelegate: self)
         
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        prepareView()
         
-        assignLetterProperties()
+        hangmanPresenter.startGame()
         
-        loadDictionary()
-        
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        
-        view.addGestureRecognizer(tap)
-        
-        prepareMusic()
+        hangmanPresenter.prepareMusic(withName: nameOfMainTheme)
         
         playMainSong()
-
     }
     
+    //IBACTIONS
+    @IBAction func changeAudioMode(_ sender: Any) {
+        hangmanPresenter.changeAudioMode()
+    }
     @IBAction func playLetter(_ sender: Any) {
-        hangmanPresenter.playLetter(letter: letter.text, nameEffectIfDie: nameOfDeadEffect)
+        hangmanPresenter.playLetter(letter: letter.text, nameEffectIfDie: nameOfWriteEffect)
     }
     
     @IBAction func refreshGame(_ sender: Any) {
         startGame()
+    }
+    
+    
+    //view functions
+    private func formatMessage(message: String,messageType : MessageType) -> NSMutableAttributedString{
+        
+        var messageMutableString = NSMutableAttributedString()
+        messageMutableString = NSMutableAttributedString(string: message + String(hangmanPresenter.originalWord).uppercased(), attributes: [NSAttributedString.Key : Any]())
+        messageMutableString.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 15), range: NSRange(location:message.count,length: hangmanPresenter.originalWord.count))
+        
+        let color = (messageType == MessageType.Sucess) ? sucessColor : errorColor
+        messageMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location:message.count,length:hangmanPresenter.originalWord.count))
+        
+        return messageMutableString
+        
+    }
+    
+    func startGame(){
+        self.hangmanPresenter.startGame()
     }
     
     func assignImageToVolumeButton(_ nameOfImageToAssign :String) {
@@ -79,8 +96,15 @@ class ViewController: UIViewController, HangManViewDelegate {
         }
     }
     
-    @IBAction func changeAudioMode(_ sender: Any) {
-       hangmanPresenter.changeAudioMode()
+    private func prepareView() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+        assignLetterProperties()
     }
     
     func showFailedSolution() {
@@ -117,19 +141,6 @@ class ViewController: UIViewController, HangManViewDelegate {
         present(ac,animated: true)
     }
     
-    private func formatMessage(message: String,messageType : MessageType) -> NSMutableAttributedString{
-        
-        var messageMutableString = NSMutableAttributedString()
-        messageMutableString = NSMutableAttributedString(string: message + String(hangmanPresenter.getOriginalWord()).uppercased(), attributes: [NSAttributedString.Key : Any]())
-        messageMutableString.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 15), range: NSRange(location:message.count,length: hangmanPresenter.getOriginalWord().count))
-
-        let color = (messageType == MessageType.Sucess) ? sucessColor : errorColor
-    messageMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location:message.count,length:hangmanPresenter.getOriginalWord().count))
-        
-        return messageMutableString
-        
-    }
-    
     private func assignLetterProperties() {
         //making contraints for the textfield
         letter.autocapitalizationType = UITextAutocapitalizationType.allCharacters
@@ -137,41 +148,6 @@ class ViewController: UIViewController, HangManViewDelegate {
         letter.delegate = self
         
         letter.addTarget(self, action: #selector(textFieldChange(textField:)), for: UIControl.Event.editingChanged)
-    }
-    
-    func prepareMusic(musicURL: URL){
-        do {
-            backgroundMusicAvAudioPlayer = try AVAudioPlayer(contentsOf: musicURL)
-            backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume
-        } catch {
-            // couldn't load file :(
-        }
-    }
-    
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
-    //new methods
-    func resetView(){
-        life.progress = 100
-        life.progressTintColor = .green
-        imageHangMan.image = nil
-    }
-    
-    @objc internal func changeTextWordLabel(text: String) {
-        wordLabel.text = text.uppercased()
-        wordLabel.addCharacterSpacing(characterSpacing)
-    }
-    
-    func getCurrentWordLabel() -> String{
-        guard let wordLabel = wordLabel.text else {return ""}
-        return wordLabel
-    }
-    
-    func startGame(){
-        self.hangmanPresenter.startGame()
     }
     
     func changeHangmanImg(literalName: String) {
@@ -182,7 +158,32 @@ class ViewController: UIViewController, HangManViewDelegate {
         letter.text?.removeAll()
     }
     
-    //sounds functions
+    func getCurrentWordLabel() -> String{
+        guard let wordLabel = wordLabel.text else {return ""}
+        return wordLabel
+    }
+    
+    @objc internal func changeTextWordLabel(text: String) {
+        wordLabel.text = text.uppercased()
+        wordLabel.addCharacterSpacing(characterSpacing)
+    }
+    
+    func resetView(){
+        life.progress = 100
+        life.progressTintColor = .green
+        imageHangMan.image = nil
+    }
+    
+    //Sounds functions
+    func prepareMusic(musicURL: URL){
+        do {
+            backgroundMusicAvAudioPlayer = try AVAudioPlayer(contentsOf: musicURL)
+            backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume
+        } catch {
+            // couldn't load file :(
+        }
+    }
+    
     func playEffectWithString(_ efectURL : URL){
         do{
             playEffect = try AVAudioPlayer(contentsOf: efectURL)
@@ -199,7 +200,7 @@ class ViewController: UIViewController, HangManViewDelegate {
     
     func showSoundIconAndUnmuteApp(){
         assignImageToVolumeButton(nameOfSoundIcon)
-        backgroundMusicAvAudioPlayer?.volume = backgroundMusicAvAudioPlayer
+        backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume
     }
     
     private func playMainSong(){
@@ -222,7 +223,11 @@ class ViewController: UIViewController, HangManViewDelegate {
         life.progressTintColor = UIColor(red: CGFloat(red),green: CGFloat(green),blue: CGFloat(blue),alpha: CGFloat(alpha))
     }
     
-    //special keyboard events
+    //special view events
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     @objc func textFieldChange(textField: UITextField){
         dismissKeyboard()
     }

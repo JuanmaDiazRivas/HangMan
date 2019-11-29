@@ -8,10 +8,11 @@
 
 import Foundation
 
-class HangManPresenter: NSObject, DictionaryDelegate {
+class HangManPresenter {
     
     private let dictionaryService = DictionaryService()
     private var dictionaryModel  = [DictionaryModel]()
+    
     weak private var hangmanViewDelegate: HangManViewDelegate?
     
     //Constants
@@ -29,39 +30,20 @@ class HangManPresenter: NSObject, DictionaryDelegate {
     var currentWord: String = ""
     var triesLeft = Float()
     
-    
-    override init(){
-        super.init()
-        dictionaryService.setDelegate(dictionaryDelegate: self)
+    init(){
+        prepareWordsModel()
     }
     
     func setViewDelegate(hangmanViewDelegate: HangManViewDelegate?){
         self.hangmanViewDelegate = hangmanViewDelegate
     }
     
-    fileprivate func playAndShowFirstWordInLabel(_ wordFromDictionary: String) {
-        originalWord = Array(wordFromDictionary)
-        var prepareFirstWord = String(repeating: "_", count: originalWord.count)
-        
-        for _ in 0..<3{
-            let random = Int.random(in: 0..<originalWord.count)
-            let letterToPlay = Array(originalWord)[random]
-            modifyWord(letterUsed: letterToPlay)
+    private func prepareWordsModel() {
+        dictionaryService.getDictionary().forEach { (wordFromDictionary) in
+            allWords.append(wordFromDictionary.word)
         }
-        
-        self.hangmanViewDelegate?.changeTextWordLabel(text: prepareFirstWord)
     }
     
-    func startGame() {
-        let wordFromDictionary = shuffleDictionaryWord()
-        
-        self.hangmanViewDelegate?.resetView()
-        
-        triesLeft = errorsOnInitAllowed
-        
-        //take 3 positions and reveal all the letters on the word for this letter
-        playAndShowFirstWordInLabel(wordFromDictionary)
-    }
     
     private func shuffleDictionaryWord() -> String {
         var auxWord = String()
@@ -116,7 +98,7 @@ class HangManPresenter: NSObject, DictionaryDelegate {
             self.hangmanViewDelegate?.showFailedSolution()
     }
     
-    fileprivate func changeLifeBarStatus(_ progressCalculated: Float) {
+    private func changeLifeBarStatus(_ progressCalculated: Float) {
         switch progressCalculated {
             case 0.0..<0.3:
                 self.hangmanViewDelegate?.changeLifeColor(red:1.00, green:0.00, blue:0.00, alpha:1.0)
@@ -149,6 +131,30 @@ class HangManPresenter: NSObject, DictionaryDelegate {
     }
     
     //game functions
+    private func playAndShowFirstWordInLabel(_ wordFromDictionary: String) {
+        originalWord = Array(wordFromDictionary)
+        
+        let prepareFirstWord = String(repeating: "_", count: originalWord.count)
+        
+        self.hangmanViewDelegate?.changeTextWordLabel(text: prepareFirstWord)
+        for _ in 0..<3{
+            let random = Int.random(in: 0..<originalWord.count)
+            let letterToPlay = Array(originalWord)[random]
+            modifyWord(letterUsed: letterToPlay)
+        }
+    }
+    
+    func startGame() {
+        let wordFromDictionary = shuffleDictionaryWord()
+        
+        self.hangmanViewDelegate?.resetView()
+        
+        triesLeft = errorsOnInitAllowed
+        
+        //take 3 positions and reveal all the letters on the word for this letter
+        playAndShowFirstWordInLabel(wordFromDictionary)
+    }
+    
     func playLetter(letter: String?, nameEffectIfDie: String) {
         guard let letterUsed = letter,
             !letterUsed.isEmpty,
@@ -196,8 +202,8 @@ class HangManPresenter: NSObject, DictionaryDelegate {
         }
     }
     
-    func prepareMusic(musicURL: URL){
-        self.hangmanViewDelegate?.prepareMusic(musicURL: musicURL)
+    func prepareMusic(withName: String){
+        self.hangmanViewDelegate?.prepareMusic(musicURL: createUrlWithName(parameter: withName))
     }
     
 }
