@@ -21,7 +21,6 @@ protocol HangManViewDelegate: NSObjectProtocol{
     func changeLifeColor(red: Float,green: Float,blue: Float,alpha:Float)
     func showFailedSolution()
     func cleanInputLetter()
-    func assignImageToVolumeButton(_ nameOfImageToAssign :String)
     func showMuteIconAndMuteApp()
     func showSoundIconAndUnmuteApp()
 }

@@ -10,8 +10,6 @@ import Foundation
 
 class DictionaryService{
     
-    weak private var dictionaryDelegate: DictionaryDelegate?
-    
     private let resourceName : String = "wordList"
     private let resourceExtension : String = "txt"
     
@@ -29,9 +27,5 @@ class DictionaryService{
         }
         
         return dictionaryModel
-    }
-    
-    func setDelegate(dictionaryDelegate: DictionaryDelegate){
-        self.dictionaryDelegate = dictionaryDelegate
     }
 }
