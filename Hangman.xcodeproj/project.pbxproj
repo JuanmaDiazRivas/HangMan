@@ -26,6 +26,10 @@
 		9004CA5322FD4B780046DE68 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9004CA4C22FD4B780046DE68 /* 3.png */; };
 		9004CA5422FD4B780046DE68 /* 7.png in Resources */ = {isa = PBXBuildFile; fileRef = 9004CA4D22FD4B780046DE68 /* 7.png */; };
 		9004CA5522FD4B780046DE68 /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 9004CA4E22FD4B780046DE68 /* 6.png */; };
+		905FA6DF238D30920071C4E6 /* DictionaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6DE238D30920071C4E6 /* DictionaryModel.swift */; };
+		905FA6E4238D49E00071C4E6 /* DictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6E3238D49E00071C4E6 /* DictionaryService.swift */; };
+		905FA6E6238D79200071C4E6 /* HangManViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6E5238D79200071C4E6 /* HangManViewDelegate.swift */; };
+		905FA6E8238D7F510071C4E6 /* HangManPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6E7238D7F510071C4E6 /* HangManPresenter.swift */; };
 		90FB5C1722FC15FE007024F5 /* backgroundold.png in Resources */ = {isa = PBXBuildFile; fileRef = 90FB5C1622FC15FE007024F5 /* backgroundold.png */; };
 		90FB5C1922FC18A9007024F5 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 90FB5C1822FC18A9007024F5 /* refresh.png */; };
 		90FB5C2922FC457C007024F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FB5C2822FC457C007024F5 /* ViewController.swift */; };
@@ -39,7 +43,7 @@
 		286AA813238B1F0000C501B2 /* writeEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = writeEffect.mp3; sourceTree = "<group>"; };
 		90004B0F22FAB3660049CDDA /* lever.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lever.png; sourceTree = "<group>"; };
 		90004B1122FAE71A0049CDDA /* wordList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wordList.txt; sourceTree = "<group>"; };
-		900089B322F99A8500CB914A /* hangman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hangman.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		900089B322F99A8500CB914A /* Hangman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hangman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		900089B622F99A8500CB914A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		900089C222F99A8700CB914A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		900316A923855D7600A908D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -53,6 +57,10 @@
 		9004CA4C22FD4B780046DE68 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
 		9004CA4D22FD4B780046DE68 /* 7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 7.png; sourceTree = "<group>"; };
 		9004CA4E22FD4B780046DE68 /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
+		905FA6DE238D30920071C4E6 /* DictionaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryModel.swift; sourceTree = "<group>"; };
+		905FA6E3238D49E00071C4E6 /* DictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryService.swift; sourceTree = "<group>"; };
+		905FA6E5238D79200071C4E6 /* HangManViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangManViewDelegate.swift; sourceTree = "<group>"; };
+		905FA6E7238D7F510071C4E6 /* HangManPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangManPresenter.swift; sourceTree = "<group>"; };
 		90FB5C1622FC15FE007024F5 /* backgroundold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundold.png; sourceTree = "<group>"; };
 		90FB5C1822FC18A9007024F5 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
 		90FB5C2822FC457C007024F5 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,20 +77,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		286AA80A238B021200C501B2 /* music */ = {
+		286AA80A238B021200C501B2 /* Music */ = {
 			isa = PBXGroup;
 			children = (
 				286AA80D238B068800C501B2 /* background.mp3 */,
 				286AA80F238B06FE00C501B2 /* deadEffect.mp3 */,
 				286AA813238B1F0000C501B2 /* writeEffect.mp3 */,
 			);
-			path = music;
+			path = Music;
 			sourceTree = "<group>";
 		};
 		900089AA22F99A8500CB914A = {
 			isa = PBXGroup;
 			children = (
-				900089B522F99A8500CB914A /* hangman */,
+				900089B522F99A8500CB914A /* Hangman */,
 				900089B422F99A8500CB914A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,28 +98,56 @@
 		900089B422F99A8500CB914A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				900089B322F99A8500CB914A /* hangman.app */,
+				900089B322F99A8500CB914A /* Hangman.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		900089B522F99A8500CB914A /* hangman */ = {
+		900089B522F99A8500CB914A /* Hangman */ = {
 			isa = PBXGroup;
 			children = (
-				286AA80A238B021200C501B2 /* music */,
-				90FB5C0D22FC0AC7007024F5 /* images */,
+				905FA6E2238D49C90071C4E6 /* Service */,
+				905FA6E1238D49850071C4E6 /* Presenter */,
+				905FA6E0238D31340071C4E6 /* Model */,
+				286AA80A238B021200C501B2 /* Music */,
+				90FB5C0D22FC0AC7007024F5 /* Images */,
 				900089B622F99A8500CB914A /* AppDelegate.swift */,
 				90FB5C2822FC457C007024F5 /* ViewController.swift */,
 				900316B423868B8A00A908D2 /* LaunchScreen.storyboard */,
 				900316B223868B4F00A908D2 /* Main.storyboard */,
 				900089C222F99A8700CB914A /* Info.plist */,
-				90004B1122FAE71A0049CDDA /* wordList.txt */,
 				900316A923855D7600A908D2 /* Assets.xcassets */,
 			);
-			path = hangman;
+			path = Hangman;
 			sourceTree = "<group>";
 		};
-		90FB5C0D22FC0AC7007024F5 /* images */ = {
+		905FA6E0238D31340071C4E6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				90004B1122FAE71A0049CDDA /* wordList.txt */,
+				905FA6DE238D30920071C4E6 /* DictionaryModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		905FA6E1238D49850071C4E6 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				905FA6E5238D79200071C4E6 /* HangManViewDelegate.swift */,
+				905FA6E7238D7F510071C4E6 /* HangManPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		905FA6E2238D49C90071C4E6 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				905FA6E3238D49E00071C4E6 /* DictionaryService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		90FB5C0D22FC0AC7007024F5 /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				90FB5C1822FC18A9007024F5 /* refresh.png */,
@@ -128,15 +164,15 @@
 				90FB5C1622FC15FE007024F5 /* backgroundold.png */,
 				90004B0F22FAB3660049CDDA /* lever.png */,
 			);
-			path = images;
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		900089B222F99A8500CB914A /* hangman */ = {
+		900089B222F99A8500CB914A /* Hangman */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 900089C522F99A8700CB914A /* Build configuration list for PBXNativeTarget "hangman" */;
+			buildConfigurationList = 900089C522F99A8700CB914A /* Build configuration list for PBXNativeTarget "Hangman" */;
 			buildPhases = (
 				900089AF22F99A8500CB914A /* Sources */,
 				900089B022F99A8500CB914A /* Frameworks */,
@@ -146,9 +182,9 @@
 			);
 			dependencies = (
 			);
-			name = hangman;
+			name = Hangman;
 			productName = hangman;
-			productReference = 900089B322F99A8500CB914A /* hangman.app */;
+			productReference = 900089B322F99A8500CB914A /* Hangman.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -179,7 +215,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				900089B222F99A8500CB914A /* hangman */,
+				900089B222F99A8500CB914A /* Hangman */,
 			);
 		};
 /* End PBXProject section */
@@ -219,8 +255,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				905FA6E6238D79200071C4E6 /* HangManViewDelegate.swift in Sources */,
+				905FA6E8238D7F510071C4E6 /* HangManPresenter.swift in Sources */,
 				90FB5C2922FC457C007024F5 /* ViewController.swift in Sources */,
+				905FA6E4238D49E00071C4E6 /* DictionaryService.swift in Sources */,
 				900089B722F99A8500CB914A /* AppDelegate.swift in Sources */,
+				905FA6DF238D30920071C4E6 /* DictionaryModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,7 +431,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		900089C522F99A8700CB914A /* Build configuration list for PBXNativeTarget "hangman" */ = {
+		900089C522F99A8700CB914A /* Build configuration list for PBXNativeTarget "Hangman" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				900089C622F99A8700CB914A /* Debug */,
