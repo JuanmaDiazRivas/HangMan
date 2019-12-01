@@ -155,20 +155,32 @@ class HangManPresenter {
         playAndShowFirstWordInLabel(wordFromDictionary)
     }
     
-    func playLetter(letter: String?, nameEffectIfDie: String) {
+    func playLetter(letter: String?, nameEffectIfDie: String) -> String{
+        var control = "noChanged"
+        
         guard let letterUsed = letter,
             !letterUsed.isEmpty,
             let modified = modifyWord(letterUsed: Character(letterUsed))
-            else { return }
-        
-        self.hangmanViewDelegate?.cleanInputLetter()
+            else { return control
+        }
         
         if !modified {
             //play letter effect before decrease hp
             self.hangmanViewDelegate?.playEffectWithString(createUrlWithName(parameter: nameEffectIfDie))
             
+            control = "failed"
+            
             changeGameStatus()
+        }else{
+            if let wordCompleted = hangmanViewDelegate?.getCurrentWordLabel(){
+                if !wordCompleted.contains("_"){
+                    hangmanViewDelegate?.showSucessSolution()
+                }
+            }
+            control = "used"
         }
+        
+        return control
     }
     
     private func checkLetterOnWord(_ indexesOnRealWord: inout [Int], _ letterUsed: String ) {

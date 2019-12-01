@@ -20,7 +20,7 @@ protocol HangManViewDelegate: NSObjectProtocol{
     func getLifeProgress() -> Float
     func changeLifeColor(red: Float,green: Float,blue: Float,alpha:Float)
     func showFailedSolution()
-    func cleanInputLetter()
+    func showSucessSolution()
     func showMuteIconAndMuteApp()
     func showSoundIconAndUnmuteApp()
 }

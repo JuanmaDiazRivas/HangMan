@@ -11,10 +11,14 @@ import AVFoundation
 
 class ViewController: UIViewController, HangManViewDelegate {
     
+    
+    
+    
     //Constants
     private let characterSpacing : Double = 12
     private let textFieldLentgh: Int = 1
-    private let alertControllerKeyMessage : String = "attributedMessage"
+    private let alertControllerKeyMessage: String = "attributedMessage"
+    private let spanishDictionary: [Character] = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
     enum MessageType : String{
         case Error
         case Sucess
@@ -24,10 +28,11 @@ class ViewController: UIViewController, HangManViewDelegate {
     @IBOutlet var contentScroll: UIScrollView!
     @IBOutlet var wordLabel: UILabel!
     @IBOutlet var life: UIProgressView!
-    @IBOutlet var letter: UITextField!
-    @IBOutlet var button: UIButton!
     @IBOutlet var imageHangMan: UIImageView!
     @IBOutlet weak var volumeButton: UIButton!
+    
+    //keyboardIboutlets
+    
     
     //iOS class
     private var backgroundMusicAvAudioPlayer : AVAudioPlayer?
@@ -46,9 +51,12 @@ class ViewController: UIViewController, HangManViewDelegate {
     //Presenter
     private let hangmanPresenter = HangManPresenter()
     
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        hangmanPresenter.setViewDelegate(hangmanViewDelegate: self)
+    hangmanPresenter.setViewDelegate(hangmanViewDelegate: self)
         
         prepareView()
         
@@ -57,20 +65,35 @@ class ViewController: UIViewController, HangManViewDelegate {
         hangmanPresenter.prepareMusic(withName: nameOfMainTheme)
         
         playMainSong()
+        
+        
     }
     
     //IBACTIONS
     @IBAction func changeAudioMode(_ sender: Any) {
         hangmanPresenter.changeAudioMode()
     }
-    @IBAction func playLetter(_ sender: Any) {
-        hangmanPresenter.playLetter(letter: letter.text, nameEffectIfDie: nameOfWriteEffect)
-    }
     
     @IBAction func refreshGame(_ sender: Any) {
         startGame()
     }
     
+    @IBAction func playLatter(_ sender: UIButton) {
+        
+        let result = hangmanPresenter.playLetter(letter: sender.titleLabel?.text, nameEffectIfDie: nameOfWriteEffect)
+        
+        switch(result){
+            case "failed":
+                sender.setTitleColor(.red, for: .normal)
+                break
+            case "used":
+                sender.setTitleColor(.lightGray, for: .normal)
+                break
+            default:
+                sender.setTitleColor(.black, for: .normal)
+        }
+        
+    }
     
     //view functions
     private func formatMessage(message: String,messageType : MessageType) -> NSMutableAttributedString{
@@ -103,8 +126,6 @@ class ViewController: UIViewController, HangManViewDelegate {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
-        
-        assignLetterProperties()
     }
     
     func showFailedSolution() {
@@ -125,7 +146,7 @@ class ViewController: UIViewController, HangManViewDelegate {
         present(ac,animated: true)
     }
     
-    private func showSucessSolution() {
+    func showSucessSolution() {
         
         let message = "\nHas conseguido escapar\n\n Solución.. "
         
@@ -141,21 +162,8 @@ class ViewController: UIViewController, HangManViewDelegate {
         present(ac,animated: true)
     }
     
-    private func assignLetterProperties() {
-        //making contraints for the textfield
-        letter.autocapitalizationType = UITextAutocapitalizationType.allCharacters
-        
-        letter.delegate = self
-        
-        letter.addTarget(self, action: #selector(textFieldChange(textField:)), for: UIControl.Event.editingChanged)
-    }
-    
     func changeHangmanImg(literalName: String) {
         imageHangMan.image = UIImage(imageLiteralResourceName: literalName)
-    }
-    
-    func cleanInputLetter(){
-        letter.text?.removeAll()
     }
     
     func getCurrentWordLabel() -> String{
