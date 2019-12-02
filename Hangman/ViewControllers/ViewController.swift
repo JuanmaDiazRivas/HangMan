@@ -11,14 +11,10 @@ import AVFoundation
 
 class ViewController: UIViewController, HangManViewDelegate {
     
-    
-    
-    
     //Constants
     private let characterSpacing : Double = 12
     private let textFieldLentgh: Int = 1
     private let alertControllerKeyMessage: String = "attributedMessage"
-    private let spanishDictionary: [Character] = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
     enum MessageType : String{
         case Error
         case Sucess
@@ -51,21 +47,18 @@ class ViewController: UIViewController, HangManViewDelegate {
     //Presenter
     private let hangmanPresenter = HangManPresenter()
     
+    //Controllers
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    hangmanPresenter.setViewDelegate(hangmanViewDelegate: self)
-        
-        prepareView()
-        
+        hangmanPresenter.setViewDelegate(hangmanViewDelegate: self)
         hangmanPresenter.startGame()
-        
         hangmanPresenter.prepareMusic(withName: nameOfMainTheme)
         
-        playMainSong()
         
+        playMainSong()
         
     }
     
@@ -117,15 +110,6 @@ class ViewController: UIViewController, HangManViewDelegate {
         if let image = UIImage(named: nameOfImageToAssign){
             volumeButton.setImage(image, for: .normal)
         }
-    }
-    
-    private func prepareView() {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tap)
     }
     
     func showFailedSolution() {
@@ -231,57 +215,6 @@ class ViewController: UIViewController, HangManViewDelegate {
         life.progressTintColor = UIColor(red: CGFloat(red),green: CGFloat(green),blue: CGFloat(blue),alpha: CGFloat(alpha))
     }
     
-    //special view events
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
-    @objc func textFieldChange(textField: UITextField){
-        dismissKeyboard()
-    }
-    
-    @objc func adjustForKeyboard(notification: Notification) {
-        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-        
-        let keyboardScreenEndFrame = keyboardValue.cgRectValue
-        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-        
-        if notification.name == UIResponder.keyboardWillHideNotification {
-            contentScroll.contentInset = .zero
-        } else {
-            contentScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
-        }
-        
-        contentScroll.scrollIndicatorInsets = contentScroll.contentInset
-    }
-    
-}
-
-extension ViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range:
-        NSRange, replacementString string: String) -> Bool {
-        
-        // Always allow a backspace
-        if string.isEmpty {
-            return true
-        }
-        
-        guard let textFieldText = textField.text,
-            let rangeOfTextToReplace = Range(range, in: textFieldText) else {
-                return false
-        }
-        
-        let substringToReplace = textFieldText[rangeOfTextToReplace]
-        let count = textFieldText.count - substringToReplace.count + string.count
-        
-        let regex = try! NSRegularExpression(pattern: ".*[A-Za-z].*", options: [])
-        
-        let onlyLetters = regex.firstMatch(in: string,
-                                           options: [],
-                                           range: NSMakeRange(0, string.count)) != nil
-        
-        return count <= textFieldLentgh && onlyLetters
-    }
 }
 
 extension UILabel {
