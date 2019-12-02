@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -107,303 +109,17 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pRA-cE-fVV">
                                                 <rect key="frame" x="0.0" y="570" width="414" height="172"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="fg1-3d-DLA">
+                                                    <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R7e-N9-Fg8">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="172"/>
-                                                        <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="U2e-NV-SPy">
-                                                                <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJ3-bW-vtI">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="Q">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qXz-u6-xrl"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bx5-Kb-oeA">
-                                                                        <rect key="frame" x="41.5" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="W">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b6V-xH-yua"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPB-7Q-tRy">
-                                                                        <rect key="frame" x="83" y="0.0" width="41" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="E">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NDX-Fq-UR1"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1B-mU-hZn">
-                                                                        <rect key="frame" x="124" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="R">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yPa-op-nab"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIs-rR-JC3">
-                                                                        <rect key="frame" x="165.5" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="T">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mrp-X2-NBI"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DYy-kT-sSg">
-                                                                        <rect key="frame" x="207" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="Y">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0n3-Nj-TrZ"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nCA-4R-Zsn">
-                                                                        <rect key="frame" x="248.5" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="U">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="B42-xD-IMf"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nfq-Vw-q2F">
-                                                                        <rect key="frame" x="290" y="0.0" width="41" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="I">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2c2-lv-aBX"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8pw-nW-Ifn">
-                                                                        <rect key="frame" x="331" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="O">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xpk-vH-7LG"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8G-NR-ZEh">
-                                                                        <rect key="frame" x="372.5" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="P">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FHh-Lu-zD0"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                            </stackView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="K0u-j1-NOx">
-                                                                <rect key="frame" x="0.0" y="65" width="414" height="42"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHl-mH-ZOg">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="A">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gjp-Ks-iEt"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9VA-xI-2qg">
-                                                                        <rect key="frame" x="41.5" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="S">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="X4l-gH-j2v"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uri-xy-Ol0">
-                                                                        <rect key="frame" x="83" y="0.0" width="41" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="D">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hYk-zy-yCy"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BcE-d5-m8R">
-                                                                        <rect key="frame" x="124" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="F">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xN3-eY-6GS"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="etY-Zb-hVH">
-                                                                        <rect key="frame" x="165.5" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="G">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jhw-z8-vI9"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hf-jo-ORE">
-                                                                        <rect key="frame" x="207" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="H">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="StC-Rb-n7S"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q37-VH-tsf">
-                                                                        <rect key="frame" x="248.5" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="J">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GhT-7u-j68"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MT5-T5-weD">
-                                                                        <rect key="frame" x="290" y="0.0" width="41" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="K">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eaY-Q4-KXO"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3UH-fC-gTY">
-                                                                        <rect key="frame" x="331" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="L">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sDP-qs-0Xe"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EbI-b4-AZl">
-                                                                        <rect key="frame" x="372.5" y="0.0" width="41.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="Ñ">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="W5v-ix-w7b"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                            </stackView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="RSP-aj-aP6">
-                                                                <rect key="frame" x="0.0" y="130" width="414" height="42"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8KF-wm-NIw">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="59" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="Z">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8s9-4x-BrE"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CSE-9O-Mrv">
-                                                                        <rect key="frame" x="59" y="0.0" width="59.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="X">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kFh-OT-z0D"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PqH-sr-FMP">
-                                                                        <rect key="frame" x="118.5" y="0.0" width="59" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="C">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kYQ-uL-q2H"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lmX-Ym-oZo">
-                                                                        <rect key="frame" x="177.5" y="0.0" width="59" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="V">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ENx-kC-iAJ"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ah4-z2-7Qj">
-                                                                        <rect key="frame" x="236.5" y="0.0" width="59" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="B">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3ke-fX-xwa"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pyf-qH-emp">
-                                                                        <rect key="frame" x="295.5" y="0.0" width="59.5" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="N">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9oZ-KA-dEf"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhy-3X-rzK">
-                                                                        <rect key="frame" x="355" y="0.0" width="59" height="42"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                                        <state key="normal" title="M">
-                                                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="F0R-3r-xtE"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                            </stackView>
-                                                        </subviews>
-                                                    </stackView>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <connections>
+                                                            <segue destination="jfr-dI-xjA" kind="embed" id="Obn-OD-r1E"/>
+                                                        </connections>
+                                                    </containerView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="fg1-3d-DLA" firstAttribute="leading" secondItem="pRA-cE-fVV" secondAttribute="leading" id="d0n-NC-uhU"/>
-                                                    <constraint firstAttribute="trailing" secondItem="fg1-3d-DLA" secondAttribute="trailing" id="lzT-Bd-c1V"/>
-                                                    <constraint firstItem="fg1-3d-DLA" firstAttribute="top" secondItem="pRA-cE-fVV" secondAttribute="top" id="smB-6d-6rB"/>
-                                                    <constraint firstItem="fg1-3d-DLA" firstAttribute="centerY" secondItem="pRA-cE-fVV" secondAttribute="centerY" id="xfR-Ne-A4T"/>
+                                                    <constraint firstAttribute="height" constant="172" id="Q3W-7T-1IK"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -462,6 +178,318 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="112.5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="PFF-t1-0eR">
+            <objects>
+                <viewController id="jfr-dI-xjA" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3lK-iq-uDS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="172"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="fg1-3d-DLA">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="172"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="U2e-NV-SPy">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJ3-bW-vtI">
+                                                <rect key="frame" x="0.0" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="Q">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qXz-u6-xrl"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bx5-Kb-oeA">
+                                                <rect key="frame" x="41.5" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="W">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b6V-xH-yua"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPB-7Q-tRy">
+                                                <rect key="frame" x="83" y="0.0" width="41" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="E">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NDX-Fq-UR1"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1B-mU-hZn">
+                                                <rect key="frame" x="124" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="R">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yPa-op-nab"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIs-rR-JC3">
+                                                <rect key="frame" x="165.5" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="T">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mrp-X2-NBI"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DYy-kT-sSg">
+                                                <rect key="frame" x="207" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="Y">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0n3-Nj-TrZ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nCA-4R-Zsn">
+                                                <rect key="frame" x="248.5" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="U">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="B42-xD-IMf"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nfq-Vw-q2F">
+                                                <rect key="frame" x="290" y="0.0" width="41" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="I">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2c2-lv-aBX"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8pw-nW-Ifn">
+                                                <rect key="frame" x="331" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="O">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xpk-vH-7LG"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8G-NR-ZEh">
+                                                <rect key="frame" x="372.5" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="P">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FHh-Lu-zD0"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="K0u-j1-NOx">
+                                        <rect key="frame" x="0.0" y="65" width="414" height="42"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHl-mH-ZOg">
+                                                <rect key="frame" x="0.0" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="A">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gjp-Ks-iEt"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9VA-xI-2qg">
+                                                <rect key="frame" x="41.5" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="S">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="X4l-gH-j2v"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uri-xy-Ol0">
+                                                <rect key="frame" x="83" y="0.0" width="41" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="D">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hYk-zy-yCy"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BcE-d5-m8R">
+                                                <rect key="frame" x="124" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="F">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xN3-eY-6GS"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="etY-Zb-hVH">
+                                                <rect key="frame" x="165.5" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="G">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jhw-z8-vI9"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hf-jo-ORE">
+                                                <rect key="frame" x="207" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="H">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="StC-Rb-n7S"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q37-VH-tsf">
+                                                <rect key="frame" x="248.5" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="J">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GhT-7u-j68"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MT5-T5-weD">
+                                                <rect key="frame" x="290" y="0.0" width="41" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="K">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eaY-Q4-KXO"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3UH-fC-gTY">
+                                                <rect key="frame" x="331" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="L">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sDP-qs-0Xe"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EbI-b4-AZl">
+                                                <rect key="frame" x="372.5" y="0.0" width="41.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="Ñ">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="W5v-ix-w7b"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="RSP-aj-aP6">
+                                        <rect key="frame" x="0.0" y="130" width="414" height="42"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8KF-wm-NIw">
+                                                <rect key="frame" x="0.0" y="0.0" width="59" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="Z">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8s9-4x-BrE"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CSE-9O-Mrv">
+                                                <rect key="frame" x="59" y="0.0" width="59.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="X">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kFh-OT-z0D"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PqH-sr-FMP">
+                                                <rect key="frame" x="118.5" y="0.0" width="59" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="C">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kYQ-uL-q2H"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lmX-Ym-oZo">
+                                                <rect key="frame" x="177.5" y="0.0" width="59" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="V">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ENx-kC-iAJ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ah4-z2-7Qj">
+                                                <rect key="frame" x="236.5" y="0.0" width="59" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="B">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3ke-fX-xwa"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pyf-qH-emp">
+                                                <rect key="frame" x="295.5" y="0.0" width="59.5" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="N">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9oZ-KA-dEf"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhy-3X-rzK">
+                                                <rect key="frame" x="355" y="0.0" width="59" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="M">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playLatter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="F0R-3r-xtE"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fg1-3d-DLA" firstAttribute="top" secondItem="3lK-iq-uDS" secondAttribute="top" id="cRZ-hB-L6L"/>
+                            <constraint firstAttribute="trailing" secondItem="fg1-3d-DLA" secondAttribute="trailing" id="drv-yW-KZS"/>
+                            <constraint firstItem="fg1-3d-DLA" firstAttribute="leading" secondItem="3lK-iq-uDS" secondAttribute="leading" id="iIK-BG-Inc"/>
+                            <constraint firstAttribute="bottom" secondItem="fg1-3d-DLA" secondAttribute="bottom" id="sxt-Am-shK"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IaR-hn-LuZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="962" y="-43"/>
         </scene>
     </scenes>
     <resources>
