@@ -21,11 +21,13 @@ class ViewController: UIViewController, HangManViewDelegate {
     }
     
     //IBOutlets
-    @IBOutlet var contentScroll: UIScrollView!
+    
     @IBOutlet var wordLabel: UILabel!
     @IBOutlet var life: UIProgressView!
     @IBOutlet var imageHangMan: UIImageView!
     @IBOutlet weak var volumeButton: UIButton!
+    @IBOutlet var hangmanKeyboard: HangmanKeyboard!
+    
     
     //keyboardIboutlets
     
@@ -57,6 +59,7 @@ class ViewController: UIViewController, HangManViewDelegate {
         hangmanPresenter.startGame()
         hangmanPresenter.prepareMusic(withName: nameOfMainTheme)
         
+        hangmanKeyboard.delegate = self
         
         playMainSong()
         
@@ -69,23 +72,6 @@ class ViewController: UIViewController, HangManViewDelegate {
     
     @IBAction func refreshGame(_ sender: Any) {
         startGame()
-    }
-    
-    @IBAction func playLatter(_ sender: UIButton) {
-        
-        let result = hangmanPresenter.playLetter(letter: sender.titleLabel?.text, nameEffectIfDie: nameOfWriteEffect)
-        
-        switch(result){
-            case "failed":
-                sender.setTitleColor(.red, for: .normal)
-                break
-            case "used":
-                sender.setTitleColor(.lightGray, for: .normal)
-                break
-            default:
-                sender.setTitleColor(.black, for: .normal)
-        }
-        
     }
     
     //view functions
@@ -234,5 +220,14 @@ extension UILabel {
             range: NSRange(location: 0, length: attributedString.length)
         )
         self.attributedText = attributedString
+    }
+}
+
+// MARK: - HangmangKeyboardDelegate
+extension ViewController: HangmangKeyboardDelegate {
+    
+    func keyDidTapped(key: String) {
+        let result = hangmanPresenter.playLetter(letter: key, nameEffectIfDie: nameOfWriteEffect)
+        hangmanKeyboard.changeKey(forKey: result, withResult: result)
     }
 }

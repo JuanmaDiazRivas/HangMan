@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2828BF622395A1D800418A45 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2828BF612395A1D800418A45 /* KeyboardViewController.swift */; };
 		284861B3238C320600F256C1 /* mute.png in Resources */ = {isa = PBXBuildFile; fileRef = 284861B1238C320500F256C1 /* mute.png */; };
 		284861B4238C320600F256C1 /* sound.png in Resources */ = {isa = PBXBuildFile; fileRef = 284861B2238C320500F256C1 /* sound.png */; };
 		286AA80E238B068800C501B2 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 286AA80D238B068800C501B2 /* background.mp3 */; };
@@ -31,13 +30,16 @@
 		905FA6E4238D49E00071C4E6 /* DictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6E3238D49E00071C4E6 /* DictionaryService.swift */; };
 		905FA6E6238D79200071C4E6 /* HangManViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6E5238D79200071C4E6 /* HangManViewDelegate.swift */; };
 		905FA6E8238D7F510071C4E6 /* HangManPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6E7238D7F510071C4E6 /* HangManPresenter.swift */; };
+		90ABB72E239660B600417909 /* HangmanKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90ABB72D239660B600417909 /* HangmanKeyboard.swift */; };
+		90ABB7302396612C00417909 /* ViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90ABB72F2396612C00417909 /* ViewComponent.swift */; };
+		90ABB732239661C200417909 /* HangmanKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90ABB731239661C200417909 /* HangmanKeyboard.xib */; };
+		90ABB73423969EC800417909 /* ResultEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90ABB73323969EC800417909 /* ResultEnum.swift */; };
 		90FB5C1722FC15FE007024F5 /* backgroundold.png in Resources */ = {isa = PBXBuildFile; fileRef = 90FB5C1622FC15FE007024F5 /* backgroundold.png */; };
 		90FB5C1922FC18A9007024F5 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 90FB5C1822FC18A9007024F5 /* refresh.png */; };
 		90FB5C2922FC457C007024F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FB5C2822FC457C007024F5 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2828BF612395A1D800418A45 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KeyboardViewController.swift; path = hangman/ViewControllers/KeyboardViewController.swift; sourceTree = SOURCE_ROOT; };
 		284861B1238C320500F256C1 /* mute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mute.png; sourceTree = "<group>"; };
 		284861B2238C320500F256C1 /* sound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound.png; sourceTree = "<group>"; };
 		286AA80D238B068800C501B2 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
@@ -63,6 +65,10 @@
 		905FA6E3238D49E00071C4E6 /* DictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryService.swift; sourceTree = "<group>"; };
 		905FA6E5238D79200071C4E6 /* HangManViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangManViewDelegate.swift; sourceTree = "<group>"; };
 		905FA6E7238D7F510071C4E6 /* HangManPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangManPresenter.swift; sourceTree = "<group>"; };
+		90ABB72D239660B600417909 /* HangmanKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangmanKeyboard.swift; sourceTree = "<group>"; };
+		90ABB72F2396612C00417909 /* ViewComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewComponent.swift; sourceTree = "<group>"; };
+		90ABB731239661C200417909 /* HangmanKeyboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HangmanKeyboard.xib; sourceTree = "<group>"; };
+		90ABB73323969EC800417909 /* ResultEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultEnum.swift; sourceTree = "<group>"; };
 		90FB5C1622FC15FE007024F5 /* backgroundold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundold.png; sourceTree = "<group>"; };
 		90FB5C1822FC18A9007024F5 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
 		90FB5C2822FC457C007024F5 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				90FB5C2822FC457C007024F5 /* ViewController.swift */,
-				2828BF612395A1D800418A45 /* KeyboardViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -125,6 +130,7 @@
 		900089B522F99A8500CB914A /* Hangman */ = {
 			isa = PBXGroup;
 			children = (
+				90ABB72B2396608C00417909 /* Components */,
 				2828BF632395A25600418A45 /* Delegates */,
 				2828BF6023959C8300418A45 /* ViewControllers */,
 				905FA6E2238D49C90071C4E6 /* Service */,
@@ -146,6 +152,7 @@
 			children = (
 				90004B1122FAE71A0049CDDA /* wordList.txt */,
 				905FA6DE238D30920071C4E6 /* DictionaryModel.swift */,
+				90ABB73323969EC800417909 /* ResultEnum.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -164,6 +171,24 @@
 				905FA6E3238D49E00071C4E6 /* DictionaryService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		90ABB72B2396608C00417909 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				90ABB72F2396612C00417909 /* ViewComponent.swift */,
+				90ABB72C2396609400417909 /* Keyboard */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		90ABB72C2396609400417909 /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				90ABB72D239660B600417909 /* HangmanKeyboard.swift */,
+				90ABB731239661C200417909 /* HangmanKeyboard.xib */,
+			);
+			path = Keyboard;
 			sourceTree = "<group>";
 		};
 		90FB5C0D22FC0AC7007024F5 /* Images */ = {
@@ -221,7 +246,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 900089AE22F99A8500CB914A /* Build configuration list for PBXProject "hangman" */;
+			buildConfigurationList = 900089AE22F99A8500CB914A /* Build configuration list for PBXProject "Hangman" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -264,6 +289,7 @@
 				90FB5C1922FC18A9007024F5 /* refresh.png in Resources */,
 				9004CA5322FD4B780046DE68 /* 3.png in Resources */,
 				9004CA4F22FD4B780046DE68 /* 2.png in Resources */,
+				90ABB732239661C200417909 /* HangmanKeyboard.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,9 +301,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				905FA6E6238D79200071C4E6 /* HangManViewDelegate.swift in Sources */,
+				90ABB73423969EC800417909 /* ResultEnum.swift in Sources */,
 				905FA6E8238D7F510071C4E6 /* HangManPresenter.swift in Sources */,
+				90ABB7302396612C00417909 /* ViewComponent.swift in Sources */,
 				90FB5C2922FC457C007024F5 /* ViewController.swift in Sources */,
-				2828BF622395A1D800418A45 /* KeyboardViewController.swift in Sources */,
+				90ABB72E239660B600417909 /* HangmanKeyboard.swift in Sources */,
 				905FA6E4238D49E00071C4E6 /* DictionaryService.swift in Sources */,
 				900089B722F99A8500CB914A /* AppDelegate.swift in Sources */,
 				905FA6DF238D30920071C4E6 /* DictionaryModel.swift in Sources */,
@@ -442,7 +470,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		900089AE22F99A8500CB914A /* Build configuration list for PBXProject "hangman" */ = {
+		900089AE22F99A8500CB914A /* Build configuration list for PBXProject "Hangman" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				900089C322F99A8700CB914A /* Debug */,
