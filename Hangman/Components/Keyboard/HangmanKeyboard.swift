@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ResultEnum
 
 public protocol HangmangKeyboardDelegate: class {
     
@@ -50,8 +51,6 @@ public class HangmanKeyboard: UIView, ViewComponent {
     @IBOutlet var mButton: UIButton!
  
     
-  
-    
     // MARK: - Outlet Actions
     
     @IBAction func qButtonTouchUp(_ sender: UIButton) {
@@ -81,11 +80,18 @@ public class HangmanKeyboard: UIView, ViewComponent {
     
     // MARK: - Public Functions
     
-    public func changeKey(forKey value: String, withResult: String) {
-        keyButtons.forEach { button in
-            button.currentTitle = 
+    public func changeKey(forKey value: String, withResult: Utils.playedResult) {
+        var button = keyButtons.filter { $0.currentTitle == value }
+        
+        switch withResult {
+        case Utils.playedResult.failed:
+        
+        default:
+            <#code#>
         }
     }
+    
+    
     
     // MARK: - Setup UI
     

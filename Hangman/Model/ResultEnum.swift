@@ -8,8 +8,12 @@
 
 import Foundation
 
-enum playedResult{
-    case failed
-    case used
-    case noChanged
+public class Utils{
+    enum playedResult{
+        case failed
+        case used
+        case noChanged
+    }
 }
+
+

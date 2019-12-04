@@ -8,12 +8,35 @@
 
 import Foundation
 
-class HangManPresenter {
+public protocol HangManPresenter {
+    func viewDidLoad()
+}
+
+public protocol HangManPresenterDelegate: class {
+    
+    
+    func startGame()
+    func changeTextWordLabel(text:String)
+    func getCurrentWordLabel() -> String
+    func resetView()
+    func playEffectWithString(_ efectURL : URL)
+    func prepareMusic(musicURL: URL)
+    func changeHangmanImg(literalName: String)
+    func changeLifeProgress(_ lifeProgress: Float)
+    func getLifeProgress() -> Float
+    func changeLifeColor(red: Float,green: Float,blue: Float,alpha:Float)
+    func showFailedSolution()
+    func showSucessSolution()
+    func showMuteIconAndMuteApp()
+    func showSoundIconAndUnmuteApp()
+}
+
+class HangManPresenterImpl: HangManPresenter {
     
     private let dictionaryService = DictionaryService()
     private var dictionaryModel  = [DictionaryModel]()
     
-    weak private var hangmanViewDelegate: HangManViewDelegate?
+    private weak var delegate: HangManPresenterDelegate?
     
     //Constants
     private let errorsOnInitAllowed: Float = 7
@@ -32,6 +55,10 @@ class HangManPresenter {
     
     init(){
         prepareWordsModel()
+    }
+    
+    func viewDidLoad() {
+        
     }
     
     func setViewDelegate(hangmanViewDelegate: HangManViewDelegate?){
@@ -155,8 +182,8 @@ class HangManPresenter {
         playAndShowFirstWordInLabel(wordFromDictionary)
     }
     
-    func playLetter(letter: String?, nameEffectIfDie: String) -> String{
-        var control = "noChanged"
+    func playLetter(letter: String?, nameEffectIfDie: String) -> Utils.playedResult{
+        var control = Utils.playedResult.noChanged
         
         guard let letterUsed = letter,
             !letterUsed.isEmpty,
@@ -168,7 +195,7 @@ class HangManPresenter {
             //play letter effect before decrease hp
             self.hangmanViewDelegate?.playEffectWithString(createUrlWithName(parameter: nameEffectIfDie))
             
-            control = "failed"
+            control = Utils.playedResult.failed
             
             changeGameStatus()
         }else{
@@ -177,7 +204,7 @@ class HangManPresenter {
                     hangmanViewDelegate?.showSucessSolution()
                 }
             }
-            control = "used"
+            control = Utils.playedResult.used
         }
         
         return control
