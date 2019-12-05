@@ -28,12 +28,12 @@
 		9004CA5522FD4B780046DE68 /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 9004CA4E22FD4B780046DE68 /* 6.png */; };
 		905FA6DF238D30920071C4E6 /* DictionaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6DE238D30920071C4E6 /* DictionaryModel.swift */; };
 		905FA6E4238D49E00071C4E6 /* DictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6E3238D49E00071C4E6 /* DictionaryService.swift */; };
-		905FA6E6238D79200071C4E6 /* HangManViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6E5238D79200071C4E6 /* HangManViewDelegate.swift */; };
 		905FA6E8238D7F510071C4E6 /* HangManPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6E7238D7F510071C4E6 /* HangManPresenter.swift */; };
 		90ABB72E239660B600417909 /* HangmanKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90ABB72D239660B600417909 /* HangmanKeyboard.swift */; };
 		90ABB7302396612C00417909 /* ViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90ABB72F2396612C00417909 /* ViewComponent.swift */; };
 		90ABB732239661C200417909 /* HangmanKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90ABB731239661C200417909 /* HangmanKeyboard.xib */; };
-		90ABB73423969EC800417909 /* ResultEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90ABB73323969EC800417909 /* ResultEnum.swift */; };
+		90ABB73623990CB000417909 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90ABB73523990CB000417909 /* Utils.swift */; };
+		90ABB739239937BB00417909 /* HangmanInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90ABB738239937BB00417909 /* HangmanInteractor.swift */; };
 		90FB5C1722FC15FE007024F5 /* backgroundold.png in Resources */ = {isa = PBXBuildFile; fileRef = 90FB5C1622FC15FE007024F5 /* backgroundold.png */; };
 		90FB5C1922FC18A9007024F5 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 90FB5C1822FC18A9007024F5 /* refresh.png */; };
 		90FB5C2922FC457C007024F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FB5C2822FC457C007024F5 /* ViewController.swift */; };
@@ -63,12 +63,12 @@
 		9004CA4E22FD4B780046DE68 /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
 		905FA6DE238D30920071C4E6 /* DictionaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryModel.swift; sourceTree = "<group>"; };
 		905FA6E3238D49E00071C4E6 /* DictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryService.swift; sourceTree = "<group>"; };
-		905FA6E5238D79200071C4E6 /* HangManViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangManViewDelegate.swift; sourceTree = "<group>"; };
 		905FA6E7238D7F510071C4E6 /* HangManPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangManPresenter.swift; sourceTree = "<group>"; };
 		90ABB72D239660B600417909 /* HangmanKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangmanKeyboard.swift; sourceTree = "<group>"; };
 		90ABB72F2396612C00417909 /* ViewComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewComponent.swift; sourceTree = "<group>"; };
 		90ABB731239661C200417909 /* HangmanKeyboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HangmanKeyboard.xib; sourceTree = "<group>"; };
-		90ABB73323969EC800417909 /* ResultEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultEnum.swift; sourceTree = "<group>"; };
+		90ABB73523990CB000417909 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		90ABB738239937BB00417909 /* HangmanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangmanInteractor.swift; sourceTree = "<group>"; };
 		90FB5C1622FC15FE007024F5 /* backgroundold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundold.png; sourceTree = "<group>"; };
 		90FB5C1822FC18A9007024F5 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
 		90FB5C2822FC457C007024F5 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -85,20 +85,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2828BF6023959C8300418A45 /* ViewControllers */ = {
+		2828BF6023959C8300418A45 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				90FB5C2822FC457C007024F5 /* ViewController.swift */,
 			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		2828BF632395A25600418A45 /* Delegates */ = {
-			isa = PBXGroup;
-			children = (
-				905FA6E5238D79200071C4E6 /* HangManViewDelegate.swift */,
-			);
-			path = Delegates;
+			path = View;
 			sourceTree = "<group>";
 		};
 		286AA80A238B021200C501B2 /* Music */ = {
@@ -130,9 +122,9 @@
 		900089B522F99A8500CB914A /* Hangman */ = {
 			isa = PBXGroup;
 			children = (
+				90ABB7372399379E00417909 /* Interactor */,
 				90ABB72B2396608C00417909 /* Components */,
-				2828BF632395A25600418A45 /* Delegates */,
-				2828BF6023959C8300418A45 /* ViewControllers */,
+				2828BF6023959C8300418A45 /* View */,
 				905FA6E2238D49C90071C4E6 /* Service */,
 				905FA6E1238D49850071C4E6 /* Presenter */,
 				905FA6E0238D31340071C4E6 /* Model */,
@@ -143,6 +135,7 @@
 				900316B223868B4F00A908D2 /* Main.storyboard */,
 				900089C222F99A8700CB914A /* Info.plist */,
 				900316A923855D7600A908D2 /* Assets.xcassets */,
+				90ABB73523990CB000417909 /* Utils.swift */,
 			);
 			path = Hangman;
 			sourceTree = "<group>";
@@ -152,7 +145,6 @@
 			children = (
 				90004B1122FAE71A0049CDDA /* wordList.txt */,
 				905FA6DE238D30920071C4E6 /* DictionaryModel.swift */,
-				90ABB73323969EC800417909 /* ResultEnum.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -189,6 +181,14 @@
 				90ABB731239661C200417909 /* HangmanKeyboard.xib */,
 			);
 			path = Keyboard;
+			sourceTree = "<group>";
+		};
+		90ABB7372399379E00417909 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				90ABB738239937BB00417909 /* HangmanInteractor.swift */,
+			);
+			path = Interactor;
 			sourceTree = "<group>";
 		};
 		90FB5C0D22FC0AC7007024F5 /* Images */ = {
@@ -300,15 +300,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				905FA6E6238D79200071C4E6 /* HangManViewDelegate.swift in Sources */,
-				90ABB73423969EC800417909 /* ResultEnum.swift in Sources */,
 				905FA6E8238D7F510071C4E6 /* HangManPresenter.swift in Sources */,
+				90ABB73623990CB000417909 /* Utils.swift in Sources */,
 				90ABB7302396612C00417909 /* ViewComponent.swift in Sources */,
 				90FB5C2922FC457C007024F5 /* ViewController.swift in Sources */,
 				90ABB72E239660B600417909 /* HangmanKeyboard.swift in Sources */,
 				905FA6E4238D49E00071C4E6 /* DictionaryService.swift in Sources */,
 				900089B722F99A8500CB914A /* AppDelegate.swift in Sources */,
 				905FA6DF238D30920071C4E6 /* DictionaryModel.swift in Sources */,
+				90ABB739239937BB00417909 /* HangmanInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

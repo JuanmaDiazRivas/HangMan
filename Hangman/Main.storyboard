@@ -133,7 +133,7 @@
                         <outlet property="hangmanKeyboard" destination="Kr0-qG-EZm" id="Vsv-Qn-9W3"/>
                         <outlet property="imageHangMan" destination="afy-6G-Vas" id="Xfj-Aw-6tT"/>
                         <outlet property="life" destination="M6M-B3-TlQ" id="vdU-VZ-lT4"/>
-                        <outlet property="volumeButton" destination="Z0c-iz-Dct" id="win-Xi-HM5"/>
+                        <outlet property="soundButton" destination="Z0c-iz-Dct" id="win-Xi-HM5"/>
                         <outlet property="wordLabel" destination="JKz-Xj-pYg" id="ewP-ZQ-lCW"/>
                     </connections>
                 </viewController>

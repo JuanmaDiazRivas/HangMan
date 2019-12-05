@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ResultEnum
 
 public protocol HangmangKeyboardDelegate: class {
     
@@ -80,14 +79,22 @@ public class HangmanKeyboard: UIView, ViewComponent {
     
     // MARK: - Public Functions
     
-    public func changeKey(forKey value: String, withResult: Utils.playedResult) {
+    public func changeKey(forKey value: String, withResult: Utils.PlayedResult) {
         var button = keyButtons.filter { $0.currentTitle == value }
-        
-        switch withResult {
-        case Utils.playedResult.failed:
-        
-        default:
-            <#code#>
+        if button.count > 0 {
+            switch withResult {
+            case Utils.PlayedResult.failed:
+                    button[0].setTitleColor(.red, for: .normal)
+                    button[0].isUserInteractionEnabled = false
+                    break
+            case Utils.PlayedResult.used:
+                    button[0].setTitleColor(.gray, for: .normal)
+                    button[0].isUserInteractionEnabled = false
+                    break
+            default:
+                    button[0].setTitleColor(.black, for: .normal)
+                    break
+            }
         }
     }
     
