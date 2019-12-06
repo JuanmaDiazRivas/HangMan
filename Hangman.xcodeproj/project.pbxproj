@@ -88,6 +88,7 @@
 		2828BF6023959C8300418A45 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				90ABB72B2396608C00417909 /* Components */,
 				90FB5C2822FC457C007024F5 /* ViewController.swift */,
 			);
 			path = View;
@@ -122,14 +123,9 @@
 		900089B522F99A8500CB914A /* Hangman */ = {
 			isa = PBXGroup;
 			children = (
-				90ABB7372399379E00417909 /* Interactor */,
-				90ABB72B2396608C00417909 /* Components */,
 				2828BF6023959C8300418A45 /* View */,
-				905FA6E2238D49C90071C4E6 /* Service */,
 				905FA6E1238D49850071C4E6 /* Presenter */,
 				905FA6E0238D31340071C4E6 /* Model */,
-				286AA80A238B021200C501B2 /* Music */,
-				90FB5C0D22FC0AC7007024F5 /* Images */,
 				900089B622F99A8500CB914A /* AppDelegate.swift */,
 				900316B423868B8A00A908D2 /* LaunchScreen.storyboard */,
 				900316B223868B4F00A908D2 /* Main.storyboard */,
@@ -143,6 +139,8 @@
 		905FA6E0238D31340071C4E6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				90ABB7372399379E00417909 /* Interactor */,
+				905FA6E2238D49C90071C4E6 /* Service */,
 				90004B1122FAE71A0049CDDA /* wordList.txt */,
 				905FA6DE238D30920071C4E6 /* DictionaryModel.swift */,
 			);
@@ -152,6 +150,8 @@
 		905FA6E1238D49850071C4E6 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				90FB5C0D22FC0AC7007024F5 /* Images */,
+				286AA80A238B021200C501B2 /* Music */,
 				905FA6E7238D7F510071C4E6 /* HangManPresenter.swift */,
 			);
 			path = Presenter;
@@ -246,7 +246,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 900089AE22F99A8500CB914A /* Build configuration list for PBXProject "Hangman" */;
+			buildConfigurationList = 900089AE22F99A8500CB914A /* Build configuration list for PBXProject "hangman" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -470,7 +470,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		900089AE22F99A8500CB914A /* Build configuration list for PBXProject "Hangman" */ = {
+		900089AE22F99A8500CB914A /* Build configuration list for PBXProject "hangman" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				900089C322F99A8700CB914A /* Debug */,

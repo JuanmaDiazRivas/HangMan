@@ -81,10 +81,7 @@ class HangManPresenterImpl: HangManPresenter {
     
     
     //life functions
-    fileprivate func endGame() {
-            self.delegate?.changeLifeProgress(0)
-            self.delegate?.showFailedSolution()
-    }
+    
     
     //game functions
     func startGame() {
@@ -93,6 +90,10 @@ class HangManPresenterImpl: HangManPresenter {
         interactor?.initalizeGame()
     }
     
+    private func endGame() {
+            self.delegate?.changeLifeProgress(0)
+    }
+        
     func playLetter(letter: String?) -> Utils.PlayedResult{
         var control = Utils.PlayedResult.noChanged
         
