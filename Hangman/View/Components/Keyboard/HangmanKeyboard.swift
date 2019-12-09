@@ -9,7 +9,6 @@
 import UIKit
 
 public protocol HangmangKeyboardDelegate: class {
-    
     func keyDidTapped(key: String)
     
 }
@@ -80,7 +79,7 @@ public class HangmanKeyboard: UIView, ViewComponent {
     // MARK: - Public Functions
     
     public func changeKey(forKey value: String, withResult: Utils.PlayedResult) {
-        var button = keyButtons.filter { $0.currentTitle == value }
+        let button = keyButtons.filter { $0.currentTitle == value }
         if button.count > 0 {
             switch withResult {
             case Utils.PlayedResult.failed:

@@ -7,8 +7,9 @@
 //
 
 public protocol HangmanInteractor{
-    func initalizeGame()
+    func initalizeGame() -> [Character]
     func presenterDidLoad(hangmanInteractorDelegate: HangmanInteractorDelegate?)
+    func playLetter(letter: String?) -> Utils.PlayedResult
 }
 
 public protocol HangmanInteractorDelegate: class{
@@ -39,7 +40,7 @@ class HangmanInteractorImpl: HangmanInteractor{
     }
     
     
-    func initalizeGame() {
+    func initalizeGame() -> [Character]{
         triesLeft = errorsOnInitAllowed
         
         //load the word from dicitionary
@@ -50,11 +51,8 @@ class HangmanInteractorImpl: HangmanInteractor{
         originalWord = Array(wordFromDictionary)
         
         //take 3 random positions and reveal all the letters in word for this letter
-        for _ in 0..<3{
-            let random = Int.random(in: 0..<originalWord.count)
-            let letterToPlay = Array(originalWord)[random]
-            initWord(letterUsed: letterToPlay, firstWord: &firstWord)
-        }
+        initWord(firstWord: &firstWord)
+        
         
         currentWord = firstWord
         
@@ -62,17 +60,22 @@ class HangmanInteractorImpl: HangmanInteractor{
     }
     
 
-    private func initWord(letterUsed : Character, firstWord: inout String){
-        
-        var auxWordArray = Array(firstWord)
-        
-        originalWord.enumerated().forEach { index, character in
-            if character.uppercased() == letterUsed.uppercased() {
-                auxWordArray[index] = character
+    private func initWord(firstWord: inout String){
+        for _ in 0..<3{
+            let random = Int.random(in: 0..<originalWord.count)
+            let letterToPlay = Array(originalWord)[random]
+            
+            var auxWordArray = Array(firstWord)
+            
+            originalWord.enumerated().forEach { index, character in
+                if character.uppercased() == letterToPlay.uppercased() {
+                    auxWordArray[index] = character
+                }
             }
-        }
 
-        firstWord = String(auxWordArray)
+            firstWord = String(auxWordArray)
+        }
+        
     }
     
     private func modifyWord(letterUsed : Character,currenWord: String) -> Bool?{
@@ -94,6 +97,33 @@ class HangmanInteractorImpl: HangmanInteractor{
         return wordModified
     }
     
+    func playLetter(letter: String?) -> Utils.PlayedResult{
+        var control = Utils.PlayedResult.noChanged
+        
+        guard let letterUsed = letter,
+            !letterUsed.isEmpty,
+            let modified = modifyWord(letterUsed: Character(letterUsed),currenWord: self.currentWord)
+            else { return control}
+        
+        if !modified {
+            //play letter effect before decrease hp
+            self.delegate?.playEffectWithString(createUrlWithName(parameter: nameEffectIfDie))
+            
+            control = Utils.PlayedResult.failed
+            
+            changeGameStatus()
+        }else{
+            if let wordCompleted = delegate?.getCurrentWordLabel(){
+                if !wordCompleted.contains("_"){
+                    delegate?.showSucessSolution()
+                }
+            }
+            control = Utils.PlayedResult.used
+        }
+        
+        return control
+    }
+    
     private func shuffleDictionaryWord() -> String {
         var auxWord = String()
         allWords.shuffle()
@@ -103,19 +133,6 @@ class HangmanInteractorImpl: HangmanInteractor{
             }
         }
         return auxWord
-    }
-    
-    private func formatMessage(message: String,messageType : MessageType) -> NSMutableAttributedString{
-        
-        var messageMutableString = NSMutableAttributedString()
-        messageMutableString = NSMutableAttributedString(string: message + String(presenter.originalWord).uppercased(), attributes: [NSAttributedString.Key : Any]())
-        messageMutableString.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 15), range: NSRange(location:message.count,length: presenter.originalWord.count))
-        
-        let color = (messageType == MessageType.Sucess) ? sucessColor : errorColor
-        messageMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location:message.count,length:presenter.originalWord.count))
-        
-        return messageMutableString
-        
     }
     
     private func changeGameStatus(containsHealthBar: Bool){

@@ -83,12 +83,16 @@ extension UILabel {
 // MARK: - HangmangKeyboardDelegate
 extension ViewController: HangmangKeyboardDelegate {
     func keyDidTapped(key: String) {
-        guard let result = presenter?.playLetter(letter: key) else { return }
+        guard let result = presenter?.useLetter(letter: key) else { return }
         hangmanKeyboard.changeKey(forKey: key, withResult: result)
     }
 }
 
 extension ViewController: HangManPresenterDelegate {
+    func presentDialog(alertController: UIAlertController) {
+        present(alertController,animated: true)
+    }
+    
     
     func changeSoundIcon(image: UIImage) {
         self.soundButton.imageView?.image  = image

@@ -13,7 +13,7 @@ import AVFoundation
 public protocol HangManPresenter {
     func viewDidLoad(hangmanPresenterDelegate: HangManPresenterDelegate?)
     func changeAudioMode()
-    func playLetter(letter: String?) -> Utils.PlayedResult
+    func useLetter(letter: String?) -> Utils.PlayedResult
     func startGame()
 }
 
@@ -26,6 +26,7 @@ public protocol HangManPresenterDelegate: class {
     func getLifeProgress() -> Float
     func changeLifeColor(red: Float,green: Float,blue: Float,alpha:Float)
     func changeSoundIcon(image: UIImage)
+    func presentDialog(alertController: UIAlertController)
 }
 
 class HangManPresenterImpl: HangManPresenter {
@@ -53,6 +54,9 @@ class HangManPresenterImpl: HangManPresenter {
     
     //Delegate
     private weak var delegate: HangManPresenterDelegate?
+    
+    //Aux variables
+    private var originalWord: [Character] = []
     
     //Constants
     private let characterSpacing : Double = 12
@@ -87,38 +91,30 @@ class HangManPresenterImpl: HangManPresenter {
     func startGame() {
          self.delegate?.resetView(progress: 100, tintColor: .green)
         
-        interactor?.initalizeGame()
+        if let wordInitialized = interactor?.initalizeGame(){
+         originalWord = wordInitialized
+        }
     }
     
     private func endGame() {
             self.delegate?.changeLifeProgress(0)
     }
         
-    func playLetter(letter: String?) -> Utils.PlayedResult{
-        var control = Utils.PlayedResult.noChanged
+    private func formatMessage(message: String,messageType : MessageType) -> NSMutableAttributedString{
         
-        guard let letterUsed = letter,
-            !letterUsed.isEmpty,
-            let modified = modifyWord(letterUsed: Character(letterUsed))
-            else { return control
-        }
+        var messageMutableString = NSMutableAttributedString()
+        messageMutableString = NSMutableAttributedString(string: message + String(originalWord).uppercased(), attributes: [NSAttributedString.Key : Any]())
+        messageMutableString.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 15), range: NSRange(location:message.count,length: originalWord.count))
         
-        if !modified {
-            //play letter effect before decrease hp
-            self.delegate?.playEffectWithString(createUrlWithName(parameter: nameEffectIfDie))
-            
-            control = Utils.PlayedResult.failed
-            
-            changeGameStatus()
-        }else{
-            if let wordCompleted = delegate?.getCurrentWordLabel(){
-                if !wordCompleted.contains("_"){
-                    delegate?.showSucessSolution()
-                }
-            }
-            control = Utils.PlayedResult.used
-        }
+        let color = (messageType == MessageType.Sucess) ? sucessColor : errorColor
+        messageMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location:message.count, length:originalWord.count))
         
+        return messageMutableString
+        
+    }
+    
+    func useLetter(letter: String?) -> Utils.PlayedResult{
+        guard let control = self.interactor?.playLetter(letter: letter) else {return Utils.PlayedResult.noChanged}
         return control
     }
     
@@ -133,9 +129,9 @@ class HangManPresenterImpl: HangManPresenter {
     //music functions
     func changeAudioMode() {
         if !isMuted{
-            self.delegate?.showMuteIconAndMuteApp()
+            self.showMuteIconAndMuteApp()
         }else{
-            self.delegate?.showSoundIconAndUnmuteApp()
+            self.showSoundIconAndUnmuteApp()
         }
         
         isMuted = !isMuted
@@ -153,7 +149,7 @@ class HangManPresenterImpl: HangManPresenter {
     
     func assignImageToVolumeButton(_ nameOfImageToAssign :String) {
         if let image = UIImage(named: nameOfImageToAssign){
-            volumeButton.setImage(image, for: .normal)
+            self.delegate?.changeSoundIcon(image: image)
         }
     }
     
@@ -196,7 +192,7 @@ class HangManPresenterImpl: HangManPresenter {
             self.startGame()
         })
         
-        present(ac,animated: true)
+        self.delegate?.presentDialog(alertController: ac)
     }
     
     func showSucessSolution() {
@@ -209,10 +205,10 @@ class HangManPresenterImpl: HangManPresenter {
         
         ac.addAction(UIAlertAction(title: "OK", style: .default){
             (alert:UIAlertAction!) in
-            self.presenter?.startGame()
+            self.startGame()
         })
         
-        present(ac,animated: true)
+        self.delegate?.presentDialog(alertController: ac)
     }
 
     
