@@ -12,4 +12,6 @@ public class Utils {
     public enum PlayedResult{
         case noChanged,used,failed,win,lose
     }
+    
+    public static var errorsOnInitAllowed: Float = 7
 }

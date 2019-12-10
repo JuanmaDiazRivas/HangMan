@@ -140,7 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				90ABB7372399379E00417909 /* Interactor */,
-				905FA6E2238D49C90071C4E6 /* Service */,
+				905FA6E2238D49C90071C4E6 /* Repository */,
 				90004B1122FAE71A0049CDDA /* wordList.txt */,
 				905FA6DE238D30920071C4E6 /* DictionaryModel.swift */,
 			);
@@ -157,12 +157,12 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		905FA6E2238D49C90071C4E6 /* Service */ = {
+		905FA6E2238D49C90071C4E6 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
 				905FA6E3238D49E00071C4E6 /* DictionaryRepository.swift */,
 			);
-			path = Service;
+			path = Repository;
 			sourceTree = "<group>";
 		};
 		90ABB72B2396608C00417909 /* Components */ = {
@@ -246,7 +246,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 900089AE22F99A8500CB914A /* Build configuration list for PBXProject "Hangman" */;
+			buildConfigurationList = 900089AE22F99A8500CB914A /* Build configuration list for PBXProject "hangman" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -470,7 +470,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		900089AE22F99A8500CB914A /* Build configuration list for PBXProject "Hangman" */ = {
+		900089AE22F99A8500CB914A /* Build configuration list for PBXProject "hangman" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				900089C322F99A8700CB914A /* Debug */,

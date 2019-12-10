@@ -47,11 +47,7 @@ class ViewController: UIViewController {
     
     //life functions
     func changeLifeProgress(_ lifeProgress: Float){
-        life.progress = lifeProgress
-    }
-    
-    func getLifeProgress() -> Float {
-        return life.progress
+        life.setProgress(lifeProgress, animated: true)
     }
     
     func changeLifeColor(red: Float,green: Float,blue: Float,alpha:Float){
@@ -86,18 +82,19 @@ extension ViewController: HangmangKeyboardDelegate {
     func keyDidTapped(key: String) {
         guard let result = presenter?.useLetter(letter: key) else { return }
         hangmanKeyboard.changeKey(forKey: key, withResult: result)
+        
     }
 }
 
 extension ViewController: HangManPresenterDelegate {
+    
     func showResult(alertController: UIAlertController) {
         present(alertController,animated: true)
-        self.hangmanKeyboard.reloadKeyBoard()
     }
     
     
     func changeSoundIcon(image: UIImage) {
-        self.soundButton.imageView?.image  = image
+        self.soundButton.setImage(image, for: .normal)
     }
     
     func changeHangmanImg(image: UIImage) {
@@ -113,6 +110,7 @@ extension ViewController: HangManPresenterDelegate {
         life.progress = progress
         life.progressTintColor = tintColor
         imageHangMan.image = nil
+        hangmanKeyboard.reloadKeyBoard()
     }
     
 }

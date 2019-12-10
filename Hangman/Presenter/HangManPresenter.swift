@@ -13,7 +13,7 @@ import AVFoundation
 public protocol HangManPresenter {
     func viewDidLoad(hangmanPresenterDelegate: HangManPresenterDelegate?)
     func changeAudioMode()
-    func useLetter(letter: String?) -> Utils.PlayedResult
+    func useLetter(letter: String) -> Utils.PlayedResult
     func startGame()
 }
 
@@ -23,7 +23,6 @@ public protocol HangManPresenterDelegate: class {
     func resetView(progress: Float, tintColor: UIColor)
     func changeHangmanImg(image: UIImage)
     func changeLifeProgress(_ lifeProgress: Float)
-    func getLifeProgress() -> Float
     func changeLifeColor(red: Float,green: Float,blue: Float,alpha:Float)
     func changeSoundIcon(image: UIImage)
     func showResult(alertController: UIAlertController)
@@ -55,6 +54,7 @@ class HangManPresenterImpl: HangManPresenter {
     
     //Aux variables
     private var originalWord: [Character] = []
+    private var lifeProgress = Float()
     
     //Constants
     private let characterSpacing : Double = 12
@@ -87,13 +87,20 @@ class HangManPresenterImpl: HangManPresenter {
     
     
     //life functions
-    
+    func decreaseHealthBar(){
+        let decrease = Float((100/Utils.errorsOnInitAllowed)/100)
+        
+        lifeProgress -=  decrease
+        
+        self.changeLifeBarStatus(lifeProgress)
+    }
     
     //game functions
     func startGame() {
         guard let wordInitialized = interactor?.initalizeGame() else { return }
         originalWord = wordInitialized
-        self.delegate?.resetView(progress: 100, tintColor: .green)
+        lifeProgress = 1
+        self.delegate?.resetView(progress: lifeProgress, tintColor: .green)
     }
         
     private func formatMessage(message: String,messageType : MessageType) -> NSMutableAttributedString{
@@ -109,23 +116,28 @@ class HangManPresenterImpl: HangManPresenter {
         
     }
     
-    func useLetter(letter: String?) -> Utils.PlayedResult{
-        guard let control = self.interactor?.playLetter(letter: letter,containsHealthBar: viewContainsHealthBar) else {return Utils.PlayedResult.noChanged}
+    func useLetter(letter: String) -> Utils.PlayedResult{
+        guard var control = self.interactor?.playLetter(letter: letter,containsHealthBar: viewContainsHealthBar) else {return Utils.PlayedResult.noChanged}
         
         switch control {
-        case Utils.PlayedResult.noChanged:
+        case Utils.PlayedResult.failed:
             //if the word doesnt was changed, then we need to reproduce a sound
             self.playEffectWithString(nameOfWriteEffect)
+            decreaseHealthBar()
         case Utils.PlayedResult.win:
             self.winGame()
+            control = Utils.PlayedResult.used
         case Utils.PlayedResult.lose:
             self.endGame()
+            control = Utils.PlayedResult.failed
         default:
-            debugPrint("letter played")
+            debugPrint("letter played \(letter)")
         }
         
         return control
     }
+
+    
     
     private func checkLetterOnWord(_ indexesOnRealWord: inout [Int], _ letterUsed: String ) {
         for i in 0..<originalWord.count{

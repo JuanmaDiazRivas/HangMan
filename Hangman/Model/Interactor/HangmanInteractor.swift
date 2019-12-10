@@ -14,7 +14,6 @@ public protocol HangmanInteractor{
 
 public protocol HangmanInteractorDelegate: class{
     func newMainWord(text:String)
-    func changeLifeBarStatus(_ progressCalculated: Float)
     func attemptFailed(currentAttempts: Float)
     func endGame()
     func winGame()
@@ -25,12 +24,8 @@ class HangmanInteractorImpl: HangmanInteractor{
     //Aux variables
     var triesLeft = Float()
     var originalWordArray = [Character]()
-    var lifeProgress = Float()
     var currentWord: String = ""
     var allWords = [String]()
-    
-    //Constants
-    private let errorsOnInitAllowed: Float = 7
     
     //Delegate
     private weak var delegate: HangmanInteractorDelegate?
@@ -44,7 +39,7 @@ class HangmanInteractorImpl: HangmanInteractor{
     
     
     func initalizeGame() -> [Character]{
-        self.triesLeft = errorsOnInitAllowed
+        self.triesLeft = Utils.errorsOnInitAllowed
         
         //load the word from dicitionary
         let wordFromDictionary = repository.getRandomWord().word
@@ -111,42 +106,30 @@ class HangmanInteractorImpl: HangmanInteractor{
             let modified = modifyWord(letterUsed: Character(letterUsed),currenWord: self.currentWord)
             else { return control}
         
-        if !currentWord.contains("_"){
-            control = Utils.PlayedResult.win
-        }
-        
         if !modified && control != Utils.PlayedResult.win{
             
             control = Utils.PlayedResult.failed
             
-            changeHPBar(containsHealthBar: containsHealthBar)
+            decreaseLife(containsHealthBar: containsHealthBar, control: &control)
         }else{
                 control = Utils.PlayedResult.used
+        }
+        
+        if !currentWord.contains("_"){
+            control = Utils.PlayedResult.win
         }
         
         return control
     }
     
-    private func changeHPBar(containsHealthBar: Bool){
+    private func decreaseLife(containsHealthBar: Bool, control: inout Utils.PlayedResult){
         delegate?.attemptFailed(currentAttempts: triesLeft)
         
         triesLeft -= 1
         
-        if containsHealthBar{
-            let decrease = Float((100/errorsOnInitAllowed)/100)
-            
-            let progressCalculated = lifeProgress - decrease
-            
-            updateProgress(progessCalculated: progressCalculated)
-        }
-        
         if triesLeft.isEqual(to: 0){
-            self.delegate?.endGame()
+            control = Utils.PlayedResult.lose
         }
-    }
-    
-    private func updateProgress(progessCalculated: Float){
-        delegate?.changeLifeBarStatus(progessCalculated)
     }
     
 }
