@@ -10,6 +10,6 @@ import Foundation
 
 public class Utils {
     public enum PlayedResult{
-        case noChanged,used,failed
+        case noChanged,used,failed,win,lose
     }
 }

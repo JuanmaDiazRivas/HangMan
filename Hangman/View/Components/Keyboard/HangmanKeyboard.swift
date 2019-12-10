@@ -10,7 +10,6 @@ import UIKit
 
 public protocol HangmangKeyboardDelegate: class {
     func keyDidTapped(key: String)
-    
 }
 
 @IBDesignable
@@ -94,6 +93,13 @@ public class HangmanKeyboard: UIView, ViewComponent {
                     button[0].setTitleColor(.black, for: .normal)
                     break
             }
+        }
+    }
+    
+    public func reloadKeyBoard(){
+        keyButtons.forEach { (button) in
+            button.setTitleColor(.black, for: .normal)
+            button.isUserInteractionEnabled = true
         }
     }
     

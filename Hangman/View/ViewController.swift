@@ -82,6 +82,7 @@ extension UILabel {
 
 // MARK: - HangmangKeyboardDelegate
 extension ViewController: HangmangKeyboardDelegate {
+    
     func keyDidTapped(key: String) {
         guard let result = presenter?.useLetter(letter: key) else { return }
         hangmanKeyboard.changeKey(forKey: key, withResult: result)
@@ -89,8 +90,9 @@ extension ViewController: HangmangKeyboardDelegate {
 }
 
 extension ViewController: HangManPresenterDelegate {
-    func presentDialog(alertController: UIAlertController) {
+    func showResult(alertController: UIAlertController) {
         present(alertController,animated: true)
+        self.hangmanKeyboard.reloadKeyBoard()
     }
     
     

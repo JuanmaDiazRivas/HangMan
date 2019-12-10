@@ -9,20 +9,22 @@
 public protocol HangmanInteractor{
     func initalizeGame() -> [Character]
     func presenterDidLoad(hangmanInteractorDelegate: HangmanInteractorDelegate?)
-    func playLetter(letter: String?) -> Utils.PlayedResult
+    func playLetter(letter: String?,containsHealthBar: Bool) -> Utils.PlayedResult
 }
 
 public protocol HangmanInteractorDelegate: class{
     func newMainWord(text:String)
     func changeLifeBarStatus(_ progressCalculated: Float)
     func attemptFailed(currentAttempts: Float)
+    func endGame()
+    func winGame()
 }
 
 class HangmanInteractorImpl: HangmanInteractor{
     
     //Aux variables
     var triesLeft = Float()
-    var originalWord = [Character]()
+    var originalWordArray = [Character]()
     var lifeProgress = Float()
     var currentWord: String = ""
     var allWords = [String]()
@@ -33,41 +35,44 @@ class HangmanInteractorImpl: HangmanInteractor{
     //Delegate
     private weak var delegate: HangmanInteractorDelegate?
     
+    //Repository
+    private var repository: DictionaryRepository = DictionaryRepositoryImpl()
+    
     func presenterDidLoad(hangmanInteractorDelegate: HangmanInteractorDelegate?){
         self.delegate = hangmanInteractorDelegate
-        
-        prepareWordsModel()
     }
     
     
     func initalizeGame() -> [Character]{
-        triesLeft = errorsOnInitAllowed
+        self.triesLeft = errorsOnInitAllowed
         
         //load the word from dicitionary
-        let wordFromDictionary = shuffleDictionaryWord()
+        let wordFromDictionary = repository.getRandomWord().word
         
-        var firstWord = String(repeating: "_", count: originalWord.count)
+        var firstWord = String(repeating: "_", count: wordFromDictionary.count)
         
-        originalWord = Array(wordFromDictionary)
+        self.originalWordArray = Array(wordFromDictionary)
         
         //take 3 random positions and reveal all the letters in word for this letter
         initWord(firstWord: &firstWord)
         
         
-        currentWord = firstWord
+        self.currentWord = firstWord
         
-        delegate?.newMainWord(text: firstWord)
+        self.delegate?.newMainWord(text: firstWord)
+        
+        return originalWordArray
     }
     
 
     private func initWord(firstWord: inout String){
         for _ in 0..<3{
-            let random = Int.random(in: 0..<originalWord.count)
-            let letterToPlay = Array(originalWord)[random]
+            let random = Int.random(in: 0..<originalWordArray.count)
+            let letterToPlay = Array(originalWordArray)[random]
             
             var auxWordArray = Array(firstWord)
             
-            originalWord.enumerated().forEach { index, character in
+            self.originalWordArray.enumerated().forEach { index, character in
                 if character.uppercased() == letterToPlay.uppercased() {
                     auxWordArray[index] = character
                 }
@@ -83,7 +88,7 @@ class HangmanInteractorImpl: HangmanInteractor{
         var auxWordArray = Array(currenWord)
         var wordModified = false
         
-        originalWord.enumerated().forEach { index, character in
+        self.originalWordArray.enumerated().forEach { index, character in
             if character.uppercased() == letterUsed.uppercased() {
                 wordModified = true
                 auxWordArray[index] = character
@@ -92,12 +97,13 @@ class HangmanInteractorImpl: HangmanInteractor{
         
         if wordModified {
             self.delegate?.newMainWord(text: String(auxWordArray))
+            currentWord = String(auxWordArray)
         }
         
         return wordModified
     }
     
-    func playLetter(letter: String?) -> Utils.PlayedResult{
+    func playLetter(letter: String?,containsHealthBar: Bool) -> Utils.PlayedResult{
         var control = Utils.PlayedResult.noChanged
         
         guard let letterUsed = letter,
@@ -105,40 +111,26 @@ class HangmanInteractorImpl: HangmanInteractor{
             let modified = modifyWord(letterUsed: Character(letterUsed),currenWord: self.currentWord)
             else { return control}
         
-        if !modified {
-            //play letter effect before decrease hp
-            self.delegate?.playEffectWithString(createUrlWithName(parameter: nameEffectIfDie))
+        if !currentWord.contains("_"){
+            control = Utils.PlayedResult.win
+        }
+        
+        if !modified && control != Utils.PlayedResult.win{
             
             control = Utils.PlayedResult.failed
             
-            changeGameStatus()
+            changeHPBar(containsHealthBar: containsHealthBar)
         }else{
-            if let wordCompleted = delegate?.getCurrentWordLabel(){
-                if !wordCompleted.contains("_"){
-                    delegate?.showSucessSolution()
-                }
-            }
-            control = Utils.PlayedResult.used
+                control = Utils.PlayedResult.used
         }
         
         return control
     }
     
-    private func shuffleDictionaryWord() -> String {
-        var auxWord = String()
-        allWords.shuffle()
-        allWords.forEach { (valor) in
-            if valor.count <= 8{
-                auxWord = valor
-            }
-        }
-        return auxWord
-    }
-    
-    private func changeGameStatus(containsHealthBar: Bool){
-        triesLeft -= 1
-        
+    private func changeHPBar(containsHealthBar: Bool){
         delegate?.attemptFailed(currentAttempts: triesLeft)
+        
+        triesLeft -= 1
         
         if containsHealthBar{
             let decrease = Float((100/errorsOnInitAllowed)/100)
@@ -149,19 +141,12 @@ class HangmanInteractorImpl: HangmanInteractor{
         }
         
         if triesLeft.isEqual(to: 0){
-            endGame()
+            self.delegate?.endGame()
         }
     }
     
     private func updateProgress(progessCalculated: Float){
         delegate?.changeLifeBarStatus(progessCalculated)
-    }
-
-    //repository
-    private func prepareWordsModel() {
-        dictionaryService.getDictionary().forEach { (wordFromDictionary) in
-            allWords.append(wordFromDictionary.word)
-        }
     }
     
 }
