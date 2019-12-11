@@ -21,23 +21,23 @@ public protocol HangmanInteractorDelegate: class{
 
 class HangmanInteractorImpl: HangmanInteractor{
     
-    //Aux variables
+    //MARK: - Aux Variables
     var triesLeft = Float()
     var originalWordArray = [Character]()
     var currentWord: String = ""
     var allWords = [String]()
-    
-    //Delegate
+
+    //MARK: - Delegate
     private weak var delegate: HangmanInteractorDelegate?
     
-    //Repository
+    //MARK: - Repository
     private var repository: DictionaryRepository = DictionaryRepositoryImpl()
     
     func presenterDidLoad(hangmanInteractorDelegate: HangmanInteractorDelegate?){
         self.delegate = hangmanInteractorDelegate
     }
     
-    
+    //MARK: - Init Game
     func initalizeGame() -> [Character]{
         self.triesLeft = Utils.errorsOnInitAllowed
         
@@ -78,6 +78,7 @@ class HangmanInteractorImpl: HangmanInteractor{
         
     }
     
+    //MARK: - Modify Main Word
     private func modifyWord(letterUsed : Character,currenWord: String) -> Bool?{
         
         var auxWordArray = Array(currenWord)
@@ -122,6 +123,7 @@ class HangmanInteractorImpl: HangmanInteractor{
         return control
     }
     
+    //MARK: - Life functions
     private func decreaseLife(containsHealthBar: Bool, control: inout Utils.PlayedResult){
         delegate?.attemptFailed(currentAttempts: triesLeft)
         

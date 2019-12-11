@@ -29,6 +29,8 @@
 		905FA6DF238D30920071C4E6 /* DictionaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6DE238D30920071C4E6 /* DictionaryModel.swift */; };
 		905FA6E4238D49E00071C4E6 /* DictionaryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6E3238D49E00071C4E6 /* DictionaryRepository.swift */; };
 		905FA6E8238D7F510071C4E6 /* HangManPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905FA6E7238D7F510071C4E6 /* HangManPresenter.swift */; };
+		90AABC4723A11A2800894026 /* HangmanCorpse.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90AABC4623A11A2800894026 /* HangmanCorpse.xib */; };
+		90AABC4923A11D8E00894026 /* HangmanCorpse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AABC4823A11D8E00894026 /* HangmanCorpse.swift */; };
 		90ABB72E239660B600417909 /* HangmanKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90ABB72D239660B600417909 /* HangmanKeyboard.swift */; };
 		90ABB7302396612C00417909 /* ViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90ABB72F2396612C00417909 /* ViewComponent.swift */; };
 		90ABB732239661C200417909 /* HangmanKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90ABB731239661C200417909 /* HangmanKeyboard.xib */; };
@@ -64,6 +66,8 @@
 		905FA6DE238D30920071C4E6 /* DictionaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryModel.swift; sourceTree = "<group>"; };
 		905FA6E3238D49E00071C4E6 /* DictionaryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryRepository.swift; sourceTree = "<group>"; };
 		905FA6E7238D7F510071C4E6 /* HangManPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangManPresenter.swift; sourceTree = "<group>"; };
+		90AABC4623A11A2800894026 /* HangmanCorpse.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HangmanCorpse.xib; sourceTree = "<group>"; };
+		90AABC4823A11D8E00894026 /* HangmanCorpse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangmanCorpse.swift; sourceTree = "<group>"; };
 		90ABB72D239660B600417909 /* HangmanKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangmanKeyboard.swift; sourceTree = "<group>"; };
 		90ABB72F2396612C00417909 /* ViewComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewComponent.swift; sourceTree = "<group>"; };
 		90ABB731239661C200417909 /* HangmanKeyboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HangmanKeyboard.xib; sourceTree = "<group>"; };
@@ -165,10 +169,20 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
+		90AABC4323A119BB00894026 /* Corpse */ = {
+			isa = PBXGroup;
+			children = (
+				90AABC4623A11A2800894026 /* HangmanCorpse.xib */,
+				90AABC4823A11D8E00894026 /* HangmanCorpse.swift */,
+			);
+			path = Corpse;
+			sourceTree = "<group>";
+		};
 		90ABB72B2396608C00417909 /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				90ABB72F2396612C00417909 /* ViewComponent.swift */,
+				90AABC4323A119BB00894026 /* Corpse */,
 				90ABB72C2396609400417909 /* Keyboard */,
 			);
 			path = Components;
@@ -246,7 +260,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 900089AE22F99A8500CB914A /* Build configuration list for PBXProject "hangman" */;
+			buildConfigurationList = 900089AE22F99A8500CB914A /* Build configuration list for PBXProject "Hangman" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -272,6 +286,7 @@
 				9004CA5222FD4B780046DE68 /* 1.png in Resources */,
 				284861B4238C320600F256C1 /* sound.png in Resources */,
 				9004CA5022FD4B780046DE68 /* 4.png in Resources */,
+				90AABC4723A11A2800894026 /* HangmanCorpse.xib in Resources */,
 				900316B523868B8A00A908D2 /* LaunchScreen.storyboard in Resources */,
 				9004CA5522FD4B780046DE68 /* 6.png in Resources */,
 				90FB5C1722FC15FE007024F5 /* backgroundold.png in Resources */,
@@ -304,6 +319,7 @@
 				90ABB73623990CB000417909 /* Utils.swift in Sources */,
 				90ABB7302396612C00417909 /* ViewComponent.swift in Sources */,
 				90FB5C2922FC457C007024F5 /* ViewController.swift in Sources */,
+				90AABC4923A11D8E00894026 /* HangmanCorpse.swift in Sources */,
 				90ABB72E239660B600417909 /* HangmanKeyboard.swift in Sources */,
 				905FA6E4238D49E00071C4E6 /* DictionaryRepository.swift in Sources */,
 				900089B722F99A8500CB914A /* AppDelegate.swift in Sources */,
@@ -470,7 +486,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		900089AE22F99A8500CB914A /* Build configuration list for PBXProject "hangman" */ = {
+		900089AE22F99A8500CB914A /* Build configuration list for PBXProject "Hangman" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				900089C322F99A8700CB914A /* Debug */,

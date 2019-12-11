@@ -10,28 +10,20 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    class var nibName: String {
-        return "ViewController"
-    }
-    
-    //IBOutlets
-    @IBOutlet var wordLabel: UILabel!
+    //MARK: - IBOutlets
     @IBOutlet var life: UIProgressView!
-    @IBOutlet var imageHangMan: UIImageView!
     @IBOutlet weak var soundButton: UIButton!
     @IBOutlet var hangmanKeyboard: HangmanKeyboard!
-    
-    //Presenter
+    @IBOutlet var hangmanCorpse: HangmanCorpse!
     private let presenter: HangManPresenter? = HangManPresenterImpl()
-    
-    //Controllers
+
     override func viewDidLoad() {
         super.viewDidLoad()
         hangmanKeyboard.delegate = self
         presenter?.viewDidLoad(hangmanPresenterDelegate: self)
     }
     
-    //IBACTIONS
+    // MARK: - IBActions
     @IBAction func changeAudioMode(_ sender: Any) {
         presenter?.changeAudioMode()
     }
@@ -39,13 +31,47 @@ class ViewController: UIViewController {
         presenter?.startGame()
     }
     
-    //view function
-    func getCurrentWordLabel() -> String{
-        guard let wordLabel = wordLabel.text else {return ""}
-        return wordLabel
+}
+
+// MARK: - HangmangKeyboardDelegate
+extension ViewController: HangmangKeyboardDelegate {
+    
+    func keyDidTapped(key: String) {
+        guard let result = presenter?.useLetter(letter: key) else { return }
+        hangmanKeyboard.changeKey(forKey: key, withResult: result)
+        
+    }
+}
+
+// MARK: - HangmanPresenterDelegate
+extension ViewController: HangManPresenterDelegate {
+    
+    func showResult(alertController: UIAlertController) {
+        present(alertController,animated: true)
     }
     
-    //life functions
+    
+    func changeSoundIcon(image: UIImage) {
+        self.soundButton.setImage(image, for: .normal)
+    }
+    
+    func informAttemptFailed(image: UIImage) {
+        hangmanCorpse.prepareNextAttempt()
+        self.imageHangMan.image = image
+    }
+    
+    func changeTextWordLabel(text: String, withCharacterSpacing: Double) {
+        wordLabel.text = text.uppercased()
+        wordLabel.addCharacterSpacing(withCharacterSpacing)
+    }
+    
+    func resetView(progress: Float, tintColor: UIColor){
+        life.progress = progress
+        life.progressTintColor = tintColor
+        imageHangMan.image = nil
+        hangmanKeyboard.reloadKeyBoard()
+    }
+    
     func changeLifeProgress(_ lifeProgress: Float){
         life.setProgress(lifeProgress, animated: true)
     }
@@ -56,6 +82,7 @@ class ViewController: UIViewController {
     
 }
 
+// MARK: - Extension UILabel
 extension UILabel {
     func addCharacterSpacing(_ kernValue: Double = 1.30) {
         guard let attributedString: NSMutableAttributedString = {
@@ -74,43 +101,4 @@ extension UILabel {
         )
         self.attributedText = attributedString
     }
-}
-
-// MARK: - HangmangKeyboardDelegate
-extension ViewController: HangmangKeyboardDelegate {
-    
-    func keyDidTapped(key: String) {
-        guard let result = presenter?.useLetter(letter: key) else { return }
-        hangmanKeyboard.changeKey(forKey: key, withResult: result)
-        
-    }
-}
-
-extension ViewController: HangManPresenterDelegate {
-    
-    func showResult(alertController: UIAlertController) {
-        present(alertController,animated: true)
-    }
-    
-    
-    func changeSoundIcon(image: UIImage) {
-        self.soundButton.setImage(image, for: .normal)
-    }
-    
-    func changeHangmanImg(image: UIImage) {
-        self.imageHangMan.image = image
-    }
-    
-    func changeTextWordLabel(text: String, withCharacterSpacing: Double) {
-        wordLabel.text = text.uppercased()
-        wordLabel.addCharacterSpacing(withCharacterSpacing)
-    }
-    
-    func resetView(progress: Float, tintColor: UIColor){
-        life.progress = progress
-        life.progressTintColor = tintColor
-        imageHangMan.image = nil
-        hangmanKeyboard.reloadKeyBoard()
-    }
-    
 }

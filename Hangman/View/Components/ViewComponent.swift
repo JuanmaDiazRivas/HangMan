@@ -2,8 +2,8 @@
 //  ViewComponent.swift
 //  PresentationKit
 //
-//  Created by Alberto Luque Fernández on 03/12/2019.
-//  Copyright © 2019 aluque. All rights reserved.
+//  Created by Juan Manuel Diaz Rivas on 06/12/2019.
+//  Copyright © 2019 jdiaz. All rights reserved.
 //
 
 import UIKit

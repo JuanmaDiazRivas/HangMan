@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
+
 public protocol HangManPresenter {
     func viewDidLoad(hangmanPresenterDelegate: HangManPresenterDelegate?)
     func changeAudioMode()
@@ -19,16 +20,16 @@ public protocol HangManPresenter {
 
 public protocol HangManPresenterDelegate: class {
     func changeTextWordLabel(text:String, withCharacterSpacing: Double)
-    func getCurrentWordLabel() -> String
     func resetView(progress: Float, tintColor: UIColor)
-    func changeHangmanImg(image: UIImage)
+    func informAttemptFailed(triesLeft: Float)
     func changeLifeProgress(_ lifeProgress: Float)
     func changeLifeColor(red: Float,green: Float,blue: Float,alpha:Float)
     func changeSoundIcon(image: UIImage)
     func showResult(alertController: UIAlertController)
 }
 
-class HangManPresenterImpl: HangManPresenter {
+
+class HangManPresenterImpl {
     
     //iOS class
     private var backgroundMusicAvAudioPlayer : AVAudioPlayer?
@@ -43,8 +44,6 @@ class HangManPresenterImpl: HangManPresenter {
     private let nameOfWriteEffect = "writeEffect.mp3"
     private let nameOfMuteIcon = "mute.png"
     private let nameOfSoundIcon = "sound.png"
-    
-    private var dictionaryModel  = [DictionaryModel]()
     
     //Interactor
     private let interactor: HangmanInteractor? = HangmanInteractorImpl()
@@ -71,22 +70,7 @@ class HangManPresenterImpl: HangManPresenter {
     //Music
     private var isMuted = false
     
-    func viewDidLoad(hangmanPresenterDelegate: HangManPresenterDelegate?) {
-        self.delegate = hangmanPresenterDelegate
-        
-        self.interactor?.presenterDidLoad(hangmanInteractorDelegate: self)
-        
-        self.startGame()
-        self.playMainSong(numberOfLoops: -1)
-    }
-    
-    private func createUrlWithName(parameter:String) -> URL{
-        let path = Bundle.main.path(forResource: parameter, ofType:nil)!
-        return URL(fileURLWithPath: path)
-    }
-    
-    
-    //life functions
+    //Life Functions
     func decreaseHealthBar(){
         let decrease = Float((100/Utils.errorsOnInitAllowed)/100)
         
@@ -94,16 +78,85 @@ class HangManPresenterImpl: HangManPresenter {
         
         self.changeLifeBarStatus(lifeProgress)
     }
-    
-    //game functions
-    func startGame() {
-        guard let wordInitialized = interactor?.initalizeGame() else { return }
-        originalWord = wordInitialized
-        lifeProgress = 1
-        self.delegate?.resetView(progress: lifeProgress, tintColor: .green)
-    }
+
+    //MARK: - Sound Functions
+    func playMainSong(numberOfLoops: Int){
         
-    private func formatMessage(message: String,messageType : MessageType) -> NSMutableAttributedString{
+        do{
+            backgroundMusicAvAudioPlayer = try AVAudioPlayer(contentsOf: Utils.createUrlWithName(parameter: nameOfMainTheme))
+            backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume
+            
+            backgroundMusicAvAudioPlayer?.numberOfLoops = numberOfLoops
+            backgroundMusicAvAudioPlayer?.play()
+        }catch {
+            debugPrint("The music could not be played")
+        }
+        
+    }
+    
+    func playEffectWithString(_ effectName : String){
+        if(!isMuted){
+            do{
+                playEffect = try AVAudioPlayer(contentsOf: Utils.createUrlWithName(parameter: effectName))
+                playEffect?.play()
+            }catch{
+                //cannot play audio :(
+            }
+        }
+    }
+    
+    func showMuteIconAndMuteApp(){
+        assignImageToVolumeButton(nameOfMuteIcon)
+        backgroundMusicAvAudioPlayer?.volume = 0.0
+    }
+    
+    func showSoundIconAndUnmuteApp(){
+        assignImageToVolumeButton(nameOfSoundIcon)
+        backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume
+    }
+    
+    func assignImageToVolumeButton(_ nameOfImageToAssign :String) {
+        if let image = UIImage(named: nameOfImageToAssign){
+            self.delegate?.changeSoundIcon(image: image)
+        }
+    }
+    
+    //MARK: - Enders
+    func showFailedSolution() {
+        //play dead effect before die
+        playEffectWithString(nameOfDeadEffect)
+        
+        let message = "\nTu salud se ha agotado.\n\n Solución.. "
+        
+        let ac = UIAlertController(title: "Has muerto..", message: nil, preferredStyle: .alert)
+        
+        ac.setValue(formatEndMessage(message: message, messageType: MessageType.Error), forKey: alertControllerKeyMessage)
+        
+        ac.addAction(UIAlertAction(title: "OK", style: .default){
+            (alert:UIAlertAction!) in
+            self.startGame()
+        })
+        
+        self.delegate?.showResult(alertController: ac)
+    }
+    
+    func showSucessSolution() {
+        
+        let message = "\nHas conseguido escapar\n\n Solución.. "
+        
+        let ac = UIAlertController(title: "Enhorabuena!", message: nil, preferredStyle: .alert)
+        
+        ac.setValue(formatEndMessage(message: message, messageType: MessageType.Sucess), forKey: alertControllerKeyMessage)
+        
+        ac.addAction(UIAlertAction(title: "OK", style: .default){
+            (alert:UIAlertAction!) in
+            self.startGame()
+        })
+        
+        self.delegate?.showResult(alertController: ac)
+    }
+    
+    private func formatEndMessage(message: String,messageType : MessageType) -> NSMutableAttributedString{
         
         var messageMutableString = NSMutableAttributedString()
         messageMutableString = NSMutableAttributedString(string: message + String(originalWord).uppercased(), attributes: [NSAttributedString.Key : Any]())
@@ -113,7 +166,36 @@ class HangManPresenterImpl: HangManPresenter {
         messageMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location:message.count, length:originalWord.count))
         
         return messageMutableString
+    }
+    
+}
+
+// MARK: - HangManPresenter
+extension HangManPresenterImpl: HangManPresenter{
+    func viewDidLoad(hangmanPresenterDelegate: HangManPresenterDelegate?) {
+        self.delegate = hangmanPresenterDelegate
         
+        self.interactor?.presenterDidLoad(hangmanInteractorDelegate: self)
+        
+        self.startGame()
+        self.playMainSong(numberOfLoops: -1)
+    }
+    
+    func startGame() {
+        guard let wordInitialized = interactor?.initalizeGame() else { return }
+        originalWord = wordInitialized
+        lifeProgress = 1
+        self.delegate?.resetView(progress: lifeProgress, tintColor: .green)
+    }
+    
+    func changeAudioMode() {
+        if !isMuted{
+            self.showMuteIconAndMuteApp()
+        }else{
+            self.showSoundIconAndUnmuteApp()
+        }
+        
+        isMuted = !isMuted
     }
     
     func useLetter(letter: String) -> Utils.PlayedResult{
@@ -136,117 +218,12 @@ class HangManPresenterImpl: HangManPresenter {
         
         return control
     }
-
-    
-    
-    private func checkLetterOnWord(_ indexesOnRealWord: inout [Int], _ letterUsed: String ) {
-        for i in 0..<originalWord.count{
-            if String(originalWord[i]) == letterUsed.lowercased(){
-                indexesOnRealWord.append(i)
-            }
-        }
-    }
-    
-    //music functions
-    func changeAudioMode() {
-        if !isMuted{
-            self.showMuteIconAndMuteApp()
-        }else{
-            self.showSoundIconAndUnmuteApp()
-        }
-        
-        isMuted = !isMuted
-    }
-    
-    func showMuteIconAndMuteApp(){
-        assignImageToVolumeButton(nameOfMuteIcon)
-        backgroundMusicAvAudioPlayer?.volume = 0.0
-    }
-    
-    func showSoundIconAndUnmuteApp(){
-        assignImageToVolumeButton(nameOfSoundIcon)
-        backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume
-    }
-    
-    func assignImageToVolumeButton(_ nameOfImageToAssign :String) {
-        if let image = UIImage(named: nameOfImageToAssign){
-            self.delegate?.changeSoundIcon(image: image)
-        }
-    }
-    
-    func playMainSong(numberOfLoops: Int){
-        //music will loop forever
-        do{
-            backgroundMusicAvAudioPlayer = try AVAudioPlayer(contentsOf: createUrlWithName(parameter: nameOfMainTheme))
-            backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume
-            
-            backgroundMusicAvAudioPlayer?.numberOfLoops = numberOfLoops
-            backgroundMusicAvAudioPlayer?.play()
-        }catch {
-            debugPrint("The music could not be played")
-        }
-        
-    }
-    
-    //view functions
-    func showFailedSolution() {
-        //play dead effect before die
-        playEffectWithString(nameOfDeadEffect)
-        
-        let message = "\nTu salud se ha agotado.\n\n Solución.. "
-        
-        let ac = UIAlertController(title: "Has muerto..", message: nil, preferredStyle: .alert)
-        
-        ac.setValue(formatMessage(message: message, messageType: MessageType.Error), forKey: alertControllerKeyMessage)
-        
-        ac.addAction(UIAlertAction(title: "OK", style: .default){
-            (alert:UIAlertAction!) in
-            self.startGame()
-        })
-        
-        self.delegate?.showResult(alertController: ac)
-    }
-    
-    func showSucessSolution() {
-        
-        let message = "\nHas conseguido escapar\n\n Solución.. "
-        
-        let ac = UIAlertController(title: "Enhorabuena!", message: nil, preferredStyle: .alert)
-        
-        ac.setValue(formatMessage(message: message, messageType: MessageType.Sucess), forKey: alertControllerKeyMessage)
-        
-        ac.addAction(UIAlertAction(title: "OK", style: .default){
-            (alert:UIAlertAction!) in
-            self.startGame()
-        })
-        
-        self.delegate?.showResult(alertController: ac)
-    }
-
-    
-    //delegate methods
-    func getDictionary(dictionary: [DictionaryModel]) {
-        self.dictionaryModel = dictionary
-    }
-    
-    func playEffectWithString(_ effectName : String){
-        if(!isMuted){
-            do{
-                playEffect = try AVAudioPlayer(contentsOf: createUrlWithName(parameter: effectName))
-                playEffect?.play()
-            }catch{
-                //cannot play audio :(
-            }
-        }
-    }
-    
 }
 
+// MARK: - HangmanInteractorDelegate
 extension HangManPresenterImpl:  HangmanInteractorDelegate{
     func attemptFailed(currentAttempts: Float) {
-        guard let image = UIImage(named: "\(Int(currentAttempts)).png") else {return}
-            
-        self.delegate?.changeHangmanImg(image: image)
+        self.delegate?.informAttemptFailed(triesLeft: currentAttempts)
     }
     
     func newMainWord(text: String) {
