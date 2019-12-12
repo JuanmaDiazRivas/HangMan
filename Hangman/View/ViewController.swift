@@ -40,11 +40,23 @@ extension ViewController: HangmangKeyboardDelegate {
         guard let result = presenter?.useLetter(letter: key) else { return }
         hangmanKeyboard.changeKey(forKey: key, withResult: result)
         
+        /** TODO: -
+         - Primero comprobamos si la letra existe en la palabra final.
+         - Si existe, añadimos la nueva letra a la palabra final.
+         - También modificamos la letra en el teclado dependiendo del resultado.
+         
+ 
+ */
+        
     }
 }
 
 // MARK: - HangmanPresenterDelegate
 extension ViewController: HangManPresenterDelegate {
+    func informAttemptFailed(triesLeft: Float) {
+        hangmanCorpse.prepareNextAttempt(triesLeft: triesLeft)
+    }
+    
     
     func showResult(alertController: UIAlertController) {
         present(alertController,animated: true)
@@ -55,20 +67,14 @@ extension ViewController: HangManPresenterDelegate {
         self.soundButton.setImage(image, for: .normal)
     }
     
-    func informAttemptFailed(image: UIImage) {
-        hangmanCorpse.prepareNextAttempt()
-        self.imageHangMan.image = image
-    }
-    
-    func changeTextWordLabel(text: String, withCharacterSpacing: Double) {
-        wordLabel.text = text.uppercased()
-        wordLabel.addCharacterSpacing(withCharacterSpacing)
+    func changeTextWordLabel(text: String) {
+        hangmanCorpse.changeMainWord(newWord: text)
     }
     
     func resetView(progress: Float, tintColor: UIColor){
         life.progress = progress
         life.progressTintColor = tintColor
-        imageHangMan.image = nil
+        hangmanCorpse.resetCorpse()
         hangmanKeyboard.reloadKeyBoard()
     }
     
@@ -80,25 +86,16 @@ extension ViewController: HangManPresenterDelegate {
         life.progressTintColor = UIColor(red: CGFloat(red),green: CGFloat(green),blue: CGFloat(blue),alpha: CGFloat(alpha))
     }
     
-}
-
-// MARK: - Extension UILabel
-extension UILabel {
-    func addCharacterSpacing(_ kernValue: Double = 1.30) {
-        guard let attributedString: NSMutableAttributedString = {
-            if let text = self.text, !text.isEmpty {
-                return NSMutableAttributedString(string: text)
-            } else if let attributedText = self.attributedText {
-                return NSMutableAttributedString(attributedString: attributedText)
-            }
-            return nil
-            }() else { return}
-        
-        attributedString.addAttribute(
-            NSAttributedString.Key.kern,
-            value: kernValue,
-            range: NSRange(location: 0, length: attributedString.length)
-        )
-        self.attributedText = attributedString
+    func enableKey(_ key: String) {
+        hangmanKeyboard.enableWord(key)
     }
+    
+    func disableKey(_ key: String) {
+        // TODO
+    }
+    
+    func setErrorKey(_ key: String) {
+        // TODO
+    }
+    
 }

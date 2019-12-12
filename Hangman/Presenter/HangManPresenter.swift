@@ -19,13 +19,16 @@ public protocol HangManPresenter {
 }
 
 public protocol HangManPresenterDelegate: class {
-    func changeTextWordLabel(text:String, withCharacterSpacing: Double)
+    func changeTextWordLabel(text:String)
     func resetView(progress: Float, tintColor: UIColor)
     func informAttemptFailed(triesLeft: Float)
     func changeLifeProgress(_ lifeProgress: Float)
     func changeLifeColor(red: Float,green: Float,blue: Float,alpha:Float)
     func changeSoundIcon(image: UIImage)
     func showResult(alertController: UIAlertController)
+    func disableKey(_ key: String)
+    func enableKey(_ key: String)
+    func setErrorKey(_ key: String)
 }
 
 
@@ -46,7 +49,7 @@ class HangManPresenterImpl {
     private let nameOfSoundIcon = "sound.png"
     
     //Interactor
-    private let interactor: HangmanInteractor? = HangmanInteractorImpl()
+    private let interactor: HangmanInteractor = HangmanInteractorImpl()
     
     //Delegate
     private weak var delegate: HangManPresenterDelegate?
@@ -56,7 +59,6 @@ class HangManPresenterImpl {
     private var lifeProgress = Float()
     
     //Constants
-    private let characterSpacing : Double = 12
     private let textFieldLentgh: Int = 1
     private let alertControllerKeyMessage: String = "attributedMessage"
     private let resourceName : String = "wordList"
@@ -69,6 +71,10 @@ class HangManPresenterImpl {
     
     //Music
     private var isMuted = false
+    
+    public init(withHangmanInteractor interactor: HangmanInteractor) {
+        self.interactor = interactor
+    }
     
     //Life Functions
     func decreaseHealthBar(){
@@ -83,7 +89,7 @@ class HangManPresenterImpl {
     func playMainSong(numberOfLoops: Int){
         
         do{
-            backgroundMusicAvAudioPlayer = try AVAudioPlayer(contentsOf: Utils.createUrlWithName(parameter: nameOfMainTheme))
+            backgroundMusicAvAudioPlayer = try AVAudioPlayer(contentsOf: self.createUrlWithName(parameter: nameOfMainTheme))
             backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume
             
             backgroundMusicAvAudioPlayer?.numberOfLoops = numberOfLoops
@@ -97,7 +103,7 @@ class HangManPresenterImpl {
     func playEffectWithString(_ effectName : String){
         if(!isMuted){
             do{
-                playEffect = try AVAudioPlayer(contentsOf: Utils.createUrlWithName(parameter: effectName))
+                playEffect = try AVAudioPlayer(contentsOf: self.createUrlWithName(parameter: effectName))
                 playEffect?.play()
             }catch{
                 //cannot play audio :(
@@ -168,6 +174,12 @@ class HangManPresenterImpl {
         return messageMutableString
     }
     
+    //MARK: - Aux mehtods
+    public func createUrlWithName(parameter:String) -> URL{
+        let path = Bundle.main.path(forResource: parameter, ofType:nil)!
+        return URL(fileURLWithPath: path)
+    }
+    
 }
 
 // MARK: - HangManPresenter
@@ -175,14 +187,14 @@ extension HangManPresenterImpl: HangManPresenter{
     func viewDidLoad(hangmanPresenterDelegate: HangManPresenterDelegate?) {
         self.delegate = hangmanPresenterDelegate
         
-        self.interactor?.presenterDidLoad(hangmanInteractorDelegate: self)
+        self.interactor.presenterDidLoad(hangmanInteractorDelegate: self)
         
         self.startGame()
         self.playMainSong(numberOfLoops: -1)
     }
     
     func startGame() {
-        guard let wordInitialized = interactor?.initalizeGame() else { return }
+        guard let wordInitialized = interactor.initalizeGame() else { return }
         originalWord = wordInitialized
         lifeProgress = 1
         self.delegate?.resetView(progress: lifeProgress, tintColor: .green)
@@ -199,7 +211,7 @@ extension HangManPresenterImpl: HangManPresenter{
     }
     
     func useLetter(letter: String) -> Utils.PlayedResult{
-        guard var control = self.interactor?.playLetter(letter: letter,containsHealthBar: viewContainsHealthBar) else {return Utils.PlayedResult.noChanged}
+        var control = self.interactor.playLetter(letter: letter,containsHealthBar: viewContainsHealthBar)
         
         switch control {
         case Utils.PlayedResult.failed:
@@ -227,7 +239,7 @@ extension HangManPresenterImpl:  HangmanInteractorDelegate{
     }
     
     func newMainWord(text: String) {
-        self.delegate?.changeTextWordLabel(text: text, withCharacterSpacing: characterSpacing)
+        self.delegate?.changeTextWordLabel(text: text)
     }
     
     func changeLifeBarStatus(_ progressCalculated: Float) {

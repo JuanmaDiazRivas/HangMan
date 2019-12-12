@@ -68,32 +68,58 @@ public class HangmanKeyboard: UIView, ViewComponent {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         xibSetup()
+        setupButtons()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         xibSetup()
+        setupButtons()
     }
     
     // MARK: - Public Functions
     
     public func changeKey(forKey value: String, withResult: Utils.PlayedResult) {
-        let button = keyButtons.filter { $0.currentTitle == value }
-        if button.count > 0 {
+        guard let button = keyButtons.first(where: { $0.currentTitle == value })
+            else { return }
+        
             switch withResult {
-            case Utils.PlayedResult.failed:
-                    button[0].setTitleColor(.red, for: .normal)
-                    button[0].isUserInteractionEnabled = false
+            case .failed:
+                    button.setTitleColor(.red, for: .normal)
+                    button.isUserInteractionEnabled = false
                     break
-            case Utils.PlayedResult.used:
-                    button[0].setTitleColor(.gray, for: .normal)
-                    button[0].isUserInteractionEnabled = false
+            case .used:
+                    button.setTitleColor(.gray, for: .normal)
+                    button.isUserInteractionEnabled = false
                     break
             default:
-                    button[0].setTitleColor(.black, for: .normal)
+                    button.setTitleColor(.black, for: .normal)
                     break
             }
-        }
+    }
+    
+    /// Disable key and set color to gray.
+    public func disableWord(_ word: String) {
+        guard let button = keyButtons.first(where: { $0.currentTitle == word })
+            else { return }
+        button.setTitleColor(.gray, for: .normal)
+        button.isUserInteractionEnabled = false
+    }
+    
+    /// Enable key and set color to black.
+    public func enableWord(_ word: String) {
+        guard let button = keyButtons.first(where: { $0.currentTitle == word })
+            else { return }
+        button.setTitleColor(.black, for: .normal)
+        button.isUserInteractionEnabled = true
+    }
+    
+    /// Disable key and set color to red.
+    public func setErrorKey(_ word: String) {
+        guard let button = keyButtons.first(where: { $0.currentTitle == word })
+            else { return }
+        button.setTitleColor(.red, for: .normal)
+        button.isUserInteractionEnabled = false
     }
     
     public func reloadKeyBoard(){
@@ -103,15 +129,17 @@ public class HangmanKeyboard: UIView, ViewComponent {
         }
     }
     
+    // MARK: - Setup Buttons
     
+    public func setupButtons() {
+        keyButtons = [qButton,wButton,eButton,rButton,tButton,yButton,uButton,iButton,oButton,pButton,aButton,sButton,dButton,fButton,gButton,hButton,jButton,kButton,lButton,nnButton,zButton,xButton,cButton,vButton,bButton,nButton,mButton]
+    }
     
     // MARK: - Setup UI
     
     public func setupUI() {
         backgroundColor = .clear
         view.backgroundColor = .clear
-        
-        keyButtons = [qButton,wButton,eButton,rButton,tButton,yButton,uButton,iButton,oButton,pButton,aButton,sButton,dButton,fButton,gButton,hButton,jButton,kButton,lButton,nnButton,zButton,xButton,cButton,vButton,bButton,nButton,mButton]
     }
     
     public override func prepareForInterfaceBuilder() {

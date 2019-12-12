@@ -6,7 +6,7 @@
 //  Copyright © 2019 Plexus. All rights reserved.
 //
 
-public protocol HangmanInteractor{
+public protocol HangmanInteractor {
     func initalizeGame() -> [Character]
     func presenterDidLoad(hangmanInteractorDelegate: HangmanInteractorDelegate?)
     func playLetter(letter: String?,containsHealthBar: Bool) -> Utils.PlayedResult
@@ -99,7 +99,7 @@ class HangmanInteractorImpl: HangmanInteractor{
         return wordModified
     }
     
-    func playLetter(letter: String?,containsHealthBar: Bool) -> Utils.PlayedResult{
+    func playLetter(letter: String?, containsHealthBar: Bool) -> Utils.PlayedResult {
         var control = Utils.PlayedResult.noChanged
         
         guard let letterUsed = letter,
