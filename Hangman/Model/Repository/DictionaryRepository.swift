@@ -8,7 +8,11 @@
 
 import Foundation
 
-class DictionaryService{
+protocol DictionaryRepository{
+    func getRandomWord() -> DictionaryModel
+}
+
+class DictionaryRepositoryImpl: DictionaryRepository{
     
     private let resourceName : String = "wordList"
     private let resourceExtension : String = "txt"
@@ -27,5 +31,13 @@ class DictionaryService{
         }
         
         return dictionaryModel
+    }
+    
+    func getRandomWord() -> DictionaryModel {
+        guard let dictionaryEntry = getDictionary().filter({ (diccionario) -> Bool in
+            diccionario.word.count <= 8
+        }).randomElement() else {return DictionaryModel(word: "", definition: "")}
+        
+        return dictionaryEntry
     }
 }

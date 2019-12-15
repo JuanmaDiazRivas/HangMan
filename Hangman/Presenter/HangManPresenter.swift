@@ -7,203 +7,260 @@
 //
 
 import Foundation
+import UIKit
+import AVFoundation
 
-class HangManPresenter {
+
+public protocol HangManPresenter {
+    func viewDidLoad(hangmanPresenterDelegate: HangManPresenterDelegate?)
+    func changeAudioMode()
+    func useLetter(letter: String)
+    func startGame()
+}
+
+public protocol HangManPresenterDelegate: class {
+    func changeTextWordLabel(text:String)
+    func resetView(progress: Float, tintColor: UIColor)
+    func informAttemptFailed(triesLeft: Float)
+    func changeLifeProgress(_ lifeProgress: Float)
+    func changeLifeColor(red: Float,green: Float,blue: Float,alpha:Float)
+    func changeSoundIcon(image: UIImage)
+    func showResult(alertController: UIAlertController)
+    func disableKey(_ key: String)
+    func enableKey(_ key: String)
+    func setErrorKey(_ key: String)
+}
+
+
+class HangManPresenterImpl {
     
-    private let dictionaryService = DictionaryService()
-    private var dictionaryModel  = [DictionaryModel]()
+    //iOS class
+    private var backgroundMusicAvAudioPlayer : AVAudioPlayer?
+    private var backgroundMusicVolume : Float = 0.5
+    private var playEffect : AVAudioPlayer?
+    private let sucessColor : UIColor = UIColor.blue
+    private let errorColor : UIColor = UIColor.red
     
-    weak private var hangmanViewDelegate: HangManViewDelegate?
+    //Music constants
+    private let nameOfMainTheme = "background.mp3"
+    private let nameOfDeadEffect = "deadEffect.mp3"
+    private let nameOfWriteEffect = "writeEffect.mp3"
+    private let nameOfMuteIcon = "mute.png"
+    private let nameOfSoundIcon = "sound.png"
+    
+    //Interactor
+    private let interactor: HangmanInteractor = HangmanInteractorImpl()
+    
+    //Delegate
+    private weak var delegate: HangManPresenterDelegate?
+    
+    //Aux variables
+    private var originalWord: [Character] = []
+    private var lifeProgress = Float()
     
     //Constants
-    private let errorsOnInitAllowed: Float = 7
+    private let textFieldLentgh: Int = 1
+    private let alertControllerKeyMessage: String = "attributedMessage"
     private let resourceName : String = "wordList"
     private let resourceExtension : String = "txt"
-    
+    private let viewContainsHealthBar: Bool = true
+    enum MessageType : String{
+        case Error
+        case Sucess
+    }
     
     //Music
     private var isMuted = false
     
-    //Aux variables
-    var allWords = [String]()
-    var originalWord = [Character]()
-    var currentWord: String = ""
-    var triesLeft = Float()
-    
-    init(){
-        prepareWordsModel()
-    }
-    
-    func setViewDelegate(hangmanViewDelegate: HangManViewDelegate?){
-        self.hangmanViewDelegate = hangmanViewDelegate
-    }
-    
-    private func prepareWordsModel() {
-        dictionaryService.getDictionary().forEach { (wordFromDictionary) in
-            allWords.append(wordFromDictionary.word)
-        }
-    }
-    
-    
-    private func shuffleDictionaryWord() -> String {
-        var auxWord = String()
-        allWords.shuffle()
-        allWords.forEach { (valor) in
-            if valor.count <= 8{
-                auxWord = valor
-            }
-        }
-        return auxWord
-    }
-    
-    private func switchToNextImage(){
-        self.hangmanViewDelegate?.changeHangmanImg(literalName: "\(Int(triesLeft)).png")
-        triesLeft -= 1
-    }
-    
-    @discardableResult
-    private func modifyWord(letterUsed : Character) -> Bool?{
+    //Life Functions
+    func decreaseHealthBar(){
+        let decrease = Float((100/Utils.errorsOnInitAllowed)/100)
         
-        guard
-            let currentWord = self.hangmanViewDelegate?.getCurrentWordLabel(),
-            !currentWord.isEmpty
-            else {return true}
+        lifeProgress -=  decrease
         
-        var auxWordArray = Array(currentWord)
-        var wordModified = false
-        
-        originalWord.enumerated().forEach { index, character in
-            if character.uppercased() == letterUsed.uppercased() {
-                wordModified = true
-                auxWordArray[index] = character
-            }
-        }
-        
-        if wordModified {
-            self.hangmanViewDelegate?.changeTextWordLabel(text: String(auxWordArray))
-        }
-        
-        return wordModified
-    }
-    
-    private func createUrlWithName(parameter:String) -> URL{
-        let path = Bundle.main.path(forResource: parameter, ofType:nil)!
-        return URL(fileURLWithPath: path)
-    }
-    
-    
-    //life functions
-    fileprivate func endGame() {
-            self.hangmanViewDelegate?.changeLifeProgress(0)
-            self.hangmanViewDelegate?.showFailedSolution()
-    }
-    
-    private func changeLifeBarStatus(_ progressCalculated: Float) {
-        switch progressCalculated {
-            case 0.0..<0.3:
-                self.hangmanViewDelegate?.changeLifeColor(red:1.00, green:0.00, blue:0.00, alpha:1.0)
-                break
-            case 0.3..<0.6:
-                self.hangmanViewDelegate?.changeLifeColor(red:1.00, green:0.64, blue:0.13, alpha:1.0)
-                break
-            default:
-                self.hangmanViewDelegate?.changeLifeColor(red:0.14, green:0.91, blue:0.07, alpha:1.0)
-        }
-    }
-    
-    private func changeGameStatus(){
-        
-        guard let barProgress = self.hangmanViewDelegate?.getLifeProgress() else {return}
-        
-        switchToNextImage()
-        
-        let decrease = Float((100/errorsOnInitAllowed)/100)
-        
-        let progressCalculated = barProgress - decrease
-        
-        self.hangmanViewDelegate?.changeLifeProgress(progressCalculated)
-        
-        if progressCalculated <= decrease{
-            endGame()
-        }
-        
-        changeLifeBarStatus(progressCalculated)
-    }
-    
-    //game functions
-    private func playAndShowFirstWordInLabel(_ wordFromDictionary: String) {
-        originalWord = Array(wordFromDictionary)
-        
-        let prepareFirstWord = String(repeating: "_", count: originalWord.count)
-        
-        self.hangmanViewDelegate?.changeTextWordLabel(text: prepareFirstWord)
-        for _ in 0..<3{
-            let random = Int.random(in: 0..<originalWord.count)
-            let letterToPlay = Array(originalWord)[random]
-            modifyWord(letterUsed: letterToPlay)
-        }
-    }
-    
-    func startGame() {
-        let wordFromDictionary = shuffleDictionaryWord()
-        
-        self.hangmanViewDelegate?.resetView()
-        
-        triesLeft = errorsOnInitAllowed
-        
-        //take 3 positions and reveal all the letters on the word for this letter
-        playAndShowFirstWordInLabel(wordFromDictionary)
-    }
-    
-    func playLetter(letter: String?, nameEffectIfDie: String) {
-        guard let letterUsed = letter,
-            !letterUsed.isEmpty,
-            let modified = modifyWord(letterUsed: Character(letterUsed))
-            else { return }
-        
-        self.hangmanViewDelegate?.cleanInputLetter()
-        
-        if !modified {
-            //play letter effect before decrease hp
-            self.hangmanViewDelegate?.playEffectWithString(createUrlWithName(parameter: nameEffectIfDie))
-            
-            changeGameStatus()
-        }
-    }
-    
-    private func checkLetterOnWord(_ indexesOnRealWord: inout [Int], _ letterUsed: String ) {
-        for i in 0..<originalWord.count{
-            if String(originalWord[i]) == letterUsed.lowercased(){
-                indexesOnRealWord.append(i)
-            }
-        }
-    }
-    
-    //music functions
-    func changeAudioMode() {
-        if !isMuted{
-            self.hangmanViewDelegate?.showMuteIconAndMuteApp()
-        }else{
-            self.hangmanViewDelegate?.showSoundIconAndUnmuteApp()
-        }
-        
-        isMuted = !isMuted
+        self.changeLifeBarStatus(lifeProgress)
     }
 
-    
-    //delegate methods
-    func getDictionary(dictionary: [DictionaryModel]) {
-        self.dictionaryModel = dictionary
+    //MARK: - Sound Functions
+    func playMainSong(numberOfLoops: Int){
+        
+        do{
+            backgroundMusicAvAudioPlayer = try AVAudioPlayer(contentsOf: self.createUrlWithName(parameter: nameOfMainTheme))
+            backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume
+            
+            backgroundMusicAvAudioPlayer?.numberOfLoops = numberOfLoops
+            backgroundMusicAvAudioPlayer?.play()
+        }catch {
+            debugPrint("The music could not be played")
+        }
+        
     }
     
     func playEffectWithString(_ effectName : String){
         if(!isMuted){
-            self.hangmanViewDelegate?.playEffectWithString(createUrlWithName(parameter: effectName))
+            do{
+                playEffect = try AVAudioPlayer(contentsOf: self.createUrlWithName(parameter: effectName))
+                playEffect?.play()
+            }catch{
+                //cannot play audio :(
+            }
         }
     }
     
-    func prepareMusic(withName: String){
-        self.hangmanViewDelegate?.prepareMusic(musicURL: createUrlWithName(parameter: withName))
+    func showMuteIconAndMuteApp(){
+        assignImageToVolumeButton(nameOfMuteIcon)
+        backgroundMusicAvAudioPlayer?.volume = 0.0
     }
     
+    func showSoundIconAndUnmuteApp(){
+        assignImageToVolumeButton(nameOfSoundIcon)
+        backgroundMusicAvAudioPlayer?.volume = backgroundMusicVolume
+    }
+    
+    func assignImageToVolumeButton(_ nameOfImageToAssign :String) {
+        if let image = UIImage(named: nameOfImageToAssign){
+            self.delegate?.changeSoundIcon(image: image)
+        }
+    }
+    
+    //MARK: - Enders
+    func showFailedSolution() {
+        //play dead effect before die
+        playEffectWithString(nameOfDeadEffect)
+        
+        let message = "\nTu salud se ha agotado.\n\n Solución.. "
+        
+        let ac = UIAlertController(title: "Has muerto..", message: nil, preferredStyle: .alert)
+        
+        ac.setValue(formatEndMessage(message: message, messageType: MessageType.Error), forKey: alertControllerKeyMessage)
+        
+        ac.addAction(UIAlertAction(title: "OK", style: .default){
+            (alert:UIAlertAction!) in
+            self.startGame()
+        })
+        
+        self.delegate?.showResult(alertController: ac)
+    }
+    
+    func showSucessSolution() {
+        
+        let message = "\nHas conseguido escapar\n\n Solución.. "
+        
+        let ac = UIAlertController(title: "Enhorabuena!", message: nil, preferredStyle: .alert)
+        
+        ac.setValue(formatEndMessage(message: message, messageType: MessageType.Sucess), forKey: alertControllerKeyMessage)
+        
+        ac.addAction(UIAlertAction(title: "OK", style: .default){
+            (alert:UIAlertAction!) in
+            self.startGame()
+        })
+        
+        self.delegate?.showResult(alertController: ac)
+    }
+    
+    private func formatEndMessage(message: String,messageType : MessageType) -> NSMutableAttributedString{
+        
+        var messageMutableString = NSMutableAttributedString()
+        messageMutableString = NSMutableAttributedString(string: message + String(originalWord).uppercased(), attributes: [NSAttributedString.Key : Any]())
+        messageMutableString.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 15), range: NSRange(location:message.count,length: originalWord.count))
+        
+        let color = (messageType == MessageType.Sucess) ? sucessColor : errorColor
+        messageMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: NSRange(location:message.count, length:originalWord.count))
+        
+        return messageMutableString
+    }
+    
+    //MARK: - Aux mehtods
+    public func createUrlWithName(parameter:String) -> URL{
+        let path = Bundle.main.path(forResource: parameter, ofType:nil)!
+        return URL(fileURLWithPath: path)
+    }
+    
+}
+
+// MARK: - HangManPresenter
+extension HangManPresenterImpl: HangManPresenter{
+    
+    func viewDidLoad(hangmanPresenterDelegate: HangManPresenterDelegate?) {
+        self.delegate = hangmanPresenterDelegate
+        
+        self.interactor.presenterDidLoad(hangmanInteractorDelegate: self)
+        
+        self.startGame()
+        self.playMainSong(numberOfLoops: -1)
+    }
+    
+    func startGame() {
+        //first we will prepare the view
+        self.lifeProgress = 1
+        self.delegate?.resetView(progress: lifeProgress, tintColor: .green)
+        
+        //second we will call the logic for init
+        let wordInitialized = interactor.initalizeGame()
+        
+        //third we will have the original word and full life progress
+        self.originalWord = wordInitialized
+
+    }
+    
+    func changeAudioMode() {
+        if !isMuted{
+            self.showMuteIconAndMuteApp()
+        }else{
+            self.showSoundIconAndUnmuteApp()
+        }
+        
+        isMuted = !isMuted
+    }
+    
+    func useLetter(letter: String){
+        self.interactor.playLetter(letter: letter,containsHealthBar: viewContainsHealthBar)
+    }
+}
+
+// MARK: - HangmanInteractorDelegate
+extension HangManPresenterImpl:  HangmanInteractorDelegate{
+    func usedKey(letter: String) {
+        self.delegate?.disableKey(letter)
+    }
+    
+    func failedKey(letter: String) {
+        //if the word doesnt was changed, then, we need to reproduce a sound
+        self.playEffectWithString(nameOfWriteEffect)
+        self.decreaseHealthBar()
+        self.delegate?.setErrorKey(letter)
+    }
+    
+    func attemptFailed(currentAttempts: Float) {
+        self.delegate?.informAttemptFailed(triesLeft: currentAttempts)
+    }
+    
+    func newMainWord(text: String) {
+        self.delegate?.changeTextWordLabel(text: text)
+    }
+    
+    func changeLifeBarStatus(_ progressCalculated: Float) {
+        self.delegate?.changeLifeProgress(progressCalculated)
+        
+        switch progressCalculated {
+        case 0.0..<0.3:
+            self.delegate?.changeLifeColor(red:1.00, green:0.00, blue:0.00, alpha:1.0)
+            break
+        case 0.3..<0.6:
+            self.delegate?.changeLifeColor(red:1.00, green:0.64, blue:0.13, alpha:1.0)
+            break
+        default:
+            self.delegate?.changeLifeColor(red:0.14, green:0.91, blue:0.07, alpha:1.0)
+        }
+    }
+    
+    func endGame() {
+        self.delegate?.changeLifeProgress(0)
+        self.playEffectWithString(nameOfDeadEffect)
+        self.showFailedSolution()
+    }
+    
+    func winGame() {
+        self.showSucessSolution()
+    }
 }
