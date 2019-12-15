@@ -37,17 +37,7 @@ class ViewController: UIViewController {
 extension ViewController: HangmangKeyboardDelegate {
     
     func keyDidTapped(key: String) {
-        guard let result = presenter?.useLetter(letter: key) else { return }
-        hangmanKeyboard.changeKey(forKey: key, withResult: result)
-        
-        /** TODO: -
-         - Primero comprobamos si la letra existe en la palabra final.
-         - Si existe, añadimos la nueva letra a la palabra final.
-         - También modificamos la letra en el teclado dependiendo del resultado.
-         
- 
- */
-        
+        presenter?.useLetter(letter: key)
     }
 }
 
@@ -91,11 +81,11 @@ extension ViewController: HangManPresenterDelegate {
     }
     
     func disableKey(_ key: String) {
-        // TODO
+        hangmanKeyboard.disableWord(key)
     }
     
     func setErrorKey(_ key: String) {
-        // TODO
+        hangmanKeyboard.setErrorKey(key)
     }
     
 }

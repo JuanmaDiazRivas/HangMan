@@ -136,9 +136,9 @@
 				900316B423868B8A00A908D2 /* LaunchScreen.storyboard */,
 				900316B223868B4F00A908D2 /* Main.storyboard */,
 				900089C222F99A8700CB914A /* Info.plist */,
-				900316A923855D7600A908D2 /* Assets.xcassets */,
 				90ABB73523990CB000417909 /* Utils.swift */,
 				90AABC4A23A294A500894026 /* PlayWord.swift */,
+				900316A923855D7600A908D2 /* Assets.xcassets */,
 			);
 			path = Hangman;
 			sourceTree = "<group>";
@@ -263,7 +263,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 900089AE22F99A8500CB914A /* Build configuration list for PBXProject "Hangman" */;
+			buildConfigurationList = 900089AE22F99A8500CB914A /* Build configuration list for PBXProject "hangman" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -490,7 +490,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		900089AE22F99A8500CB914A /* Build configuration list for PBXProject "Hangman" */ = {
+		900089AE22F99A8500CB914A /* Build configuration list for PBXProject "hangman" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				900089C322F99A8700CB914A /* Debug */,

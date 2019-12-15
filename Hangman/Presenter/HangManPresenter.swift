@@ -14,7 +14,7 @@ import AVFoundation
 public protocol HangManPresenter {
     func viewDidLoad(hangmanPresenterDelegate: HangManPresenterDelegate?)
     func changeAudioMode()
-    func useLetter(letter: String) -> Utils.PlayedResult
+    func useLetter(letter: String)
     func startGame()
 }
 
@@ -71,10 +71,6 @@ class HangManPresenterImpl {
     
     //Music
     private var isMuted = false
-    
-    public init(withHangmanInteractor interactor: HangmanInteractor) {
-        self.interactor = interactor
-    }
     
     //Life Functions
     func decreaseHealthBar(){
@@ -184,6 +180,7 @@ class HangManPresenterImpl {
 
 // MARK: - HangManPresenter
 extension HangManPresenterImpl: HangManPresenter{
+    
     func viewDidLoad(hangmanPresenterDelegate: HangManPresenterDelegate?) {
         self.delegate = hangmanPresenterDelegate
         
@@ -194,10 +191,16 @@ extension HangManPresenterImpl: HangManPresenter{
     }
     
     func startGame() {
-        guard let wordInitialized = interactor.initalizeGame() else { return }
-        originalWord = wordInitialized
-        lifeProgress = 1
+        //first we will prepare the view
+        self.lifeProgress = 1
         self.delegate?.resetView(progress: lifeProgress, tintColor: .green)
+        
+        //second we will call the logic for init
+        let wordInitialized = interactor.initalizeGame()
+        
+        //third we will have the original word and full life progress
+        self.originalWord = wordInitialized
+
     }
     
     func changeAudioMode() {
@@ -210,30 +213,24 @@ extension HangManPresenterImpl: HangManPresenter{
         isMuted = !isMuted
     }
     
-    func useLetter(letter: String) -> Utils.PlayedResult{
-        var control = self.interactor.playLetter(letter: letter,containsHealthBar: viewContainsHealthBar)
-        
-        switch control {
-        case Utils.PlayedResult.failed:
-            //if the word doesnt was changed, then we need to reproduce a sound
-            self.playEffectWithString(nameOfWriteEffect)
-            decreaseHealthBar()
-        case Utils.PlayedResult.win:
-            self.winGame()
-            control = Utils.PlayedResult.used
-        case Utils.PlayedResult.lose:
-            self.endGame()
-            control = Utils.PlayedResult.failed
-        default:
-            debugPrint("letter played \(letter)")
-        }
-        
-        return control
+    func useLetter(letter: String){
+        self.interactor.playLetter(letter: letter,containsHealthBar: viewContainsHealthBar)
     }
 }
 
 // MARK: - HangmanInteractorDelegate
 extension HangManPresenterImpl:  HangmanInteractorDelegate{
+    func usedKey(letter: String) {
+        self.delegate?.disableKey(letter)
+    }
+    
+    func failedKey(letter: String) {
+        //if the word doesnt was changed, then, we need to reproduce a sound
+        self.playEffectWithString(nameOfWriteEffect)
+        self.decreaseHealthBar()
+        self.delegate?.setErrorKey(letter)
+    }
+    
     func attemptFailed(currentAttempts: Float) {
         self.delegate?.informAttemptFailed(triesLeft: currentAttempts)
     }

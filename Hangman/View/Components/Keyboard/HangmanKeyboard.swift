@@ -79,25 +79,6 @@ public class HangmanKeyboard: UIView, ViewComponent {
     
     // MARK: - Public Functions
     
-    public func changeKey(forKey value: String, withResult: Utils.PlayedResult) {
-        guard let button = keyButtons.first(where: { $0.currentTitle == value })
-            else { return }
-        
-            switch withResult {
-            case .failed:
-                    button.setTitleColor(.red, for: .normal)
-                    button.isUserInteractionEnabled = false
-                    break
-            case .used:
-                    button.setTitleColor(.gray, for: .normal)
-                    button.isUserInteractionEnabled = false
-                    break
-            default:
-                    button.setTitleColor(.black, for: .normal)
-                    break
-            }
-    }
-    
     /// Disable key and set color to gray.
     public func disableWord(_ word: String) {
         guard let button = keyButtons.first(where: { $0.currentTitle == word })
@@ -107,16 +88,16 @@ public class HangmanKeyboard: UIView, ViewComponent {
     }
     
     /// Enable key and set color to black.
-    public func enableWord(_ word: String) {
-        guard let button = keyButtons.first(where: { $0.currentTitle == word })
+    public func enableWord(_ key: String) {
+        guard let button = keyButtons.first(where: { $0.currentTitle == key })
             else { return }
         button.setTitleColor(.black, for: .normal)
         button.isUserInteractionEnabled = true
     }
     
     /// Disable key and set color to red.
-    public func setErrorKey(_ word: String) {
-        guard let button = keyButtons.first(where: { $0.currentTitle == word })
+    public func setErrorKey(_ key: String) {
+        guard let button = keyButtons.first(where: { $0.currentTitle == key })
             else { return }
         button.setTitleColor(.red, for: .normal)
         button.isUserInteractionEnabled = false
@@ -124,8 +105,9 @@ public class HangmanKeyboard: UIView, ViewComponent {
     
     public func reloadKeyBoard(){
         keyButtons.forEach { (button) in
-            button.setTitleColor(.black, for: .normal)
-            button.isUserInteractionEnabled = true
+            if let buttonTitle = button.currentTitle{
+                self.enableWord(buttonTitle)
+            }
         }
     }
     
